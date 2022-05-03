@@ -106,7 +106,7 @@
 				type: 'POST',     // 처리할 데이터를 지정된 리소스에게 제출한다, 
 				                  // 서버로부터 데이터를 가져오지만, 보통 요청으로부터 데이터를 보내는데 사용한다.
 				// data: 'id=' + $('#id').val() + '&name=' + $('#name').val() + '&gender=' + $(':radio[name="gender"]:checked').val() + '&address=' + $('#address').val(),
-				data: $('#formMember').serialize(),
+				data: $('#formMember').serialize(),    // 폼의 모든 요소를 줄줄이 &로 연결해서 보낸다.
 				// 여기까지 요청
 				dataType: 'json',  // 여기부터 응답
 				success: function(responseText){
@@ -128,10 +128,41 @@
 	}
 	function fnModify(){
 		// 수정 버튼을 클릭하면 실행
+		$('#btnModify').on('click', function() {
+			$.ajax({
+				url: '/AJAX/modify.do',
+				data: $('#formMember').serialize(),
+				type: 'post',
+				dataType: 'json',
+				success: function(responseText){
+					if(responseText.res > 0) {
+						alert('회원 정보가 수정되었습니다.');
+						fnList();
+					} else {
+						alert('회원 정보 수정이 실패했습니다.');
+					}
+				}
+			})
+		})
 		
 	}
 	function fnRemove(){
 		// 삭제 버튼을 클릭하면 실행
+		$('#btnRemove').on('click', function(){
+			$.ajax({
+				url: '/AJAX/delete.do',
+				type: 'get',
+				dataType: 'json',
+				success: function(responseText){
+					if(responseText.res > 0) {
+						alert('회원 정보가 삭제되었습니다.');
+						fnList();
+					} else {
+						alert('회원 정보 삭제가 실패했습니다.');
+					}
+				}
+			})
+		})
 		
 	}
 	function fnInit(){
@@ -141,7 +172,7 @@
 			$('#name').val('');
 			$(':radio[name="gender"]').prop('checked', false);
 			$('#address').val('');
-		})
+		})  
 	}
 	
 	
