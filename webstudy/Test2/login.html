@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+
+    <style>
+    .member_wrapper {
+        min-width: 290px;
+        max-width: 460px;
+        padding: 0 4.35%;
+        margin: 0 auto;
+    }
+    .member_header {
+        width: 100%;
+    }
+    .member_logo {
+        width: 100%;
+        margin: 0 auto;
+        padding: 10.27% 0 0;
+        text-align: center;
+    }
+    .member_logo_link {
+        display: block;
+        width: 43.83%;
+        max-width: 195px;
+        max-height: 46px;
+        margin: 0 auto;
+        padding: 10%;
+        background-image: url(https://gdu.co.kr/images/main/logo.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .member_main {
+        width: 100%;
+    }
+    .member_join {
+        width: 100%;
+    }
+    .section_title {
+        padding: 20px 0 10px 0;
+        font-size: 14px;
+        font-weight: bold;
+        font-family: '맑은 고딕';
+        letter-spacing: 2px;
+        line-height: 1.29;
+        color: #111;
+    }
+    .member_input_wrap {
+            display: block;
+            height: 48px;
+            padding: 0;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .btn_login {
+            display: block;
+            height: 50px;
+            background-color: #00FF00;
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFF;
+            letter-spacing: -0.5px;
+            text-align: center;
+            line-height: 51px;
+        }
+
+    .member_input {
+        box-sizing: border-box;
+        width: 412px;
+        height: 48px;
+        padding: 16px 0 12px;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 14px;
+        color: #111;
+        line-height: 20px;
+        text-indent: 12px;
+    }
+</style>
+<script src="jquery-3.6.0.js"></script>
+</head>
+<body>
+    <div class="member_wrapper">
+        <header class="member_header">
+            <h1 class="member_logo">
+                <a href="https://gdu.co.kr" class="member_logo_link">
+                    
+                </a>
+            </h1>
+        </header>
+        <div class="member_main">
+            <div class="member_join">
+                <div class="section_title">※회원구분을 위해 체크해주세요
+                    <input type="radio" name="member" value="student" id="member_student" >
+                    <label for="member_student">수강생</label>
+                    <input type="radio" name="member" value="normal" id="member_normal">
+                    <label for="member_normal">일반회원</label>
+                </div>
+                <form id="login_form" action="#" method="post">
+                <label for="userid" class="member_input_wrap">
+                    <input type="email" class="member_input" maxlength="80" id="userid" placeholder="아이디">
+                </label>
+                <label for="pwd" class="member_input_wrap">
+                    <input type="password" class="member_input" maxlength="20" id="pwd" placeholder="●●●●">
+                </label>
+                <a href="#" class="btn_login" id="login2">Sign In</a>
+                </form>
+                <script>
+                    $('#login_form').on('submit', function(ev){
+
+                        if( $('#user_id').val() == ''){
+                            alert('아이디를 입력하세요.');
+                            ev.preventDefault();
+                        }
+                    });
+                </script>
+
+
+
+                
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

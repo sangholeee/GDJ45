@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mybatis.product">
+
+	<!-- 추가 -->
+	<insert id="insertProduct" parameterType="ProductDAO">
+		INSERT INTO 
+		PRODUCT(PRODUCT_NO, NAME, PRICE, IMAGE)
+		VALUES (PRODUCT_SEQ.NEXTVAL, #{name}, #{price}, #{image})
+	</insert>
+	
+	<!-- 목록 -->
+	<select id="selectProductList" resultType="ProductDAO">
+		SELECT PRODUCT_NO, NAME, PRICE, IMAGE
+		  FROM PRODUCT
+		 ORDER BY PRODUCT_NO DESC
+	</select>
+	
+	
+</mapper>

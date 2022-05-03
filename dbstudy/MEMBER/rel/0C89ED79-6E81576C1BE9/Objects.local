@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="Table" objectID="E72827B1-5B51-7029-1255-1D9E9E7C128B" name="LOGIN_TBL" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.relational.Table" propertyParentId="0C89ED79-0218-4D7F-78CC-6E81576C1BE9" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="6D1D6E46-9E82-DCA5-23ED-E00A21A1403C" name="MEMBER_TBL" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.relational.Table" propertyParentId="0C89ED79-0218-4D7F-78CC-6E81576C1BE9" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="E5572F98-DAA2-9975-A449-E445C54AFC99" name="LOGIN_TBL_MEMBER_TBL_FK" seqName="seg_0" containerID="E72827B1-5B51-7029-1255-1D9E9E7C128B" refContainerID="6D1D6E46-9E82-DCA5-23ED-E00A21A1403C" propertyClassName="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" propertyParentId="0C89ED79-0218-4D7F-78CC-6E81576C1BE9" propertySourceId="6D1D6E46-9E82-DCA5-23ED-E00A21A1403C" propertyTargetId="E72827B1-5B51-7029-1255-1D9E9E7C128B"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>

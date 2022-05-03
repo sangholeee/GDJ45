@@ -1,0 +1,78 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E72827B1-5B51-7029-1255-1D9E9E7C128B" name="LOGIN_TBL">
+<createdBy>상호찡</createdBy>
+<createdTime>2022-03-07 07:37:44 UTC</createdTime>
+<ownerDesignName>MEMBER</ownerDesignName>
+<ordsAlias>table_2</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="LOGIN_NO" id="1A8C4A48-2143-30FD-C828-74FACE090D60">
+<createdBy>상호찡</createdBy>
+<createdTime>2022-03-07 07:41:00 UTC</createdTime>
+<ownerDesignName>MEMBER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_NO" id="B663981C-9EA9-5C4B-90EC-B8E916062EC0">
+<createdBy>상호찡</createdBy>
+<createdTime>2022-03-07 07:41:00 UTC</createdTime>
+<ownerDesignName>MEMBER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E5572F98-DAA2-9975-A449-E445C54AFC99" referredColumn="0BBA3500-BF50-F81F-7B74-7A4BC8D7BBDB"/>
+</associations>
+</Column>
+<Column name="LOGIN_TIME" id="930850ED-A315-A055-C687-4EB361C8BB9A">
+<createdBy>상호찡</createdBy>
+<createdTime>2022-03-07 07:41:00 UTC</createdTime>
+<ownerDesignName>MEMBER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_TBL_MEMBER_NO" id="986486C3-B5D1-AEAB-EF08-CA6346A32221">
+<createdBy>상호찡</createdBy>
+<createdTime>2022-03-07 07:41:30 UTC</createdTime>
+<ownerDesignName>MEMBER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="09311DC3-E5A0-F030-397E-9FFB2C4AD72C" name="LOGIN_TBL_PK">
+<createdBy>상호찡</createdBy>
+<createdTime>2022-03-07 07:41:00 UTC</createdTime>
+<ownerDesignName>MEMBER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1A8C4A48-2143-30FD-C828-74FACE090D60"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B27C6A95-6F4C-754A-0983-C24F95E2FB9B" name="LOGIN_TBL_MEMBER_TBL_FK">
+<createdBy>상호찡</createdBy>
+<createdTime>2022-03-07 07:41:30 UTC</createdTime>
+<ownerDesignName>MEMBER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B663981C-9EA9-5C4B-90EC-B8E916062EC0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,34 @@
+package service;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import common.ActionForward;
+import domain.Free;
+import repository.FreeDAO;
+
+public class ModifyService implements FreeService {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		Integer freeNo = Integer.parseInt(request.getParameter("freeNo"));
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		
+		Free board = new Free();
+		board.setFreeNo(freeNo);
+		board.setTitle(title);
+		board.setContent(content);
+		
+		int res = BoardDAO.getInstance().updateBoard(board);
+
+	}
+
+}

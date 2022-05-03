@@ -1,0 +1,47 @@
+package service;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import common.ActionForward;
+import domain.Free;
+import repository.FreeDAO;
+import repository.StudentDAO;
+
+public class ModifyService implements FreeService {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		String freeNo = request.getParameter("freeNo");
+		String writer = request.getParameter("writer");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		String ip = request.getParameter("ip");
+		String hit = request.getParameter("hit");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("freeNo", freeNo);
+		map.put("writer", writer);
+		map.put("title", title);
+		map.put("content", content);
+		map.put("ip", ip);
+		map.put("hit", hit);
+		
+		int res = FreeDAO.getInstance().updateBoard(map);
+		
+		ActionForward af = null;
+		if(res > 0) {
+			af = new ActionForward("/BoardProject/detail.do?freeNo=" + freeNo, true);
+		} 		
+		return af;
+
+	}
+
+}

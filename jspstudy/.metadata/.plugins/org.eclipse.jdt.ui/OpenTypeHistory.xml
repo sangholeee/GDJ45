@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+    <typeInfo handle="=05_DBCP/src\/main\/java&lt;service{EmpService.java[EmpService" modifiers="513" timestamp="1650384026000"/>
+    <typeInfo handle="=07_BATCH/src\/main\/java&lt;service{StudentService.java[StudentService" modifiers="513" timestamp="1650587581905"/>
+    <typeInfo handle="=DBCP_PRAC/src\/main\/java&lt;service{BoardService.java[BoardService" modifiers="513" timestamp="1650445308152"/>
+    <typeInfo handle="=07_BATCH/C:\/GDJ45\/jspstudy\/07_BATCH\/src\/main\/webapp\/WEB-INF\/lib\/quartz-2.3.0-SNAPSHOT.jar&lt;org.quartz(Job.class[Job" modifiers="1537" timestamp="1650845579150"/>
+    <typeInfo handle="=BoardProject/src\/main\/java&lt;service{FreeService.java[FreeService" modifiers="513" timestamp="1650950675673"/>
+    <typeInfo handle="=08_JUNIT/src\/main\/java&lt;mybatis{ProductService.java[ProductService" modifiers="513" timestamp="1651045213424"/>
+    <typeInfo handle="=09_AJAX/src\/main\/java&lt;service{MemberService.java[MemberService" modifiers="513" timestamp="1651459403564"/>
+</typeInfoHistroy>

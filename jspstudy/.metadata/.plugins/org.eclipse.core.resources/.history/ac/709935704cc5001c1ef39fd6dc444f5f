@@ -1,0 +1,41 @@
+package service;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import common.ActionForward;
+import domain.Free;
+import repository.FreeDAO;
+
+public class ModifyService implements FreeService {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		
+		Optional<String> optFreeNo = Optional.ofNullable(request.getParameter("freeNo"));
+		Long freeNo = Long.parseLong(optFreeNo.orElse("0"));
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		
+		Free board = new Free();
+		board.setFreeNo(freeNo);
+		board.setTitle(title);
+		board.setContent(content);
+		
+		int res = FreeDAO.getInstance().updateBoard(board);
+		
+		ActionForward af = null;
+		if(res > 0) {
+			af = new ActionForward("/BoardProject/detail.do?freeNo=" + freeNo, true);
+		}
+		
+		return af;
+
+
+	}
+
+}

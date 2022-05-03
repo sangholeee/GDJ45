@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.mapper.free">
+
+	<select id="selectBoardList" resultType="domain.Free">
+		SELECT FREENO, WRITER, TITLE, CONTENT, IP, HIT
+		  FROM FREE
+		 ORDER BY FREENO DESC
+	</select>
+	
+	<insert id="insertBoard" parameterType="domain.Free">
+		INSERT INTO 
+		STUDENT(FREENO, WRITER, TITLE, CONTENT, IP, 0)
+		VALUES (STUDENT_SEQ.NEXTVAL, #{name}, #{kor}, #{eng}, #{mat}, #{avg}, #{grade})
+	</insert>
+
+
+</mapper>
