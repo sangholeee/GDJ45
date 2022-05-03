@@ -2,7 +2,7 @@
     <wb-module deploy-name="OPENAPI_PRAC">
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <property name="context-root" value="OPENAPI_PRAC"/>
         <property name="java-output-path" value="/OPENAPI_PRAC/build/classes"/>
+        <property name="context-root" value="OPENAPI"/>
     </wb-module>
 </project-modules>

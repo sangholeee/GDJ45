@@ -8,5 +8,7 @@
 </head>
 <body>
 
+	<a href="/OPENAPI/searchPage.do">검색</a>
+
 </body>
 </html>
