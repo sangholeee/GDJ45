@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<div>
+	<div>  
 		<form id="formSearch">
 			<label for="query">
 				검색
