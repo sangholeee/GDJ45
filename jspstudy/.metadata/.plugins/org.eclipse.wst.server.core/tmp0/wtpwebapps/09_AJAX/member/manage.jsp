@@ -52,7 +52,7 @@
 					tr += '<td>' + member.address + '</td>';
 					tr += '<td><input type="hidden" name="no" value="' + member.no + '"><input type="button" value="조회" class="btnDetail" data-no="' + member.no + '"></td>';
 					tr += '</tr>';
-					memberList.append(tr);
+					memberList.append(tr);       
 				})
 			}
 		})		
