@@ -3,7 +3,6 @@ INDEX VERSION 1.4+C:\GDJ45\jspstudy\.metadata\.plugins\org.eclipse.wst.jsdt.core
 2464133420.index
 3502318959.index
 1052416692.index
-3108795430.index
 3171530725.index
 4134242624.index
 2932060982.index
