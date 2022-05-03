@@ -8185,3 +8185,16 @@ org.eclipse.jgit.errors.TransportException: https://github.com/sangholeee/GDJ45.
 	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:191)
 	at org.eclipse.egit.ui.internal.push.ConfirmationPage$2.run(ConfirmationPage.java:210)
 	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+
+!ENTRY org.eclipse.egit.core 4 0 2022-05-03 14:53:50.286
+!MESSAGE An exception occurred during push on URI https://github.com/sangholeee/GDJ45.git: https://github.com/sangholeee/GDJ45.git: not authorized
+!STACK 0
+org.eclipse.jgit.errors.TransportException: https://github.com/sangholeee/GDJ45.git: not authorized
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:685)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:627)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:541)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:127)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1384)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:191)
+	at org.eclipse.egit.ui.internal.push.ConfirmationPage$2.run(ConfirmationPage.java:210)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
