@@ -31,7 +31,7 @@
 			<label for="dsc">높은가격순<input type="radio" name="sort" id="dsc" value="dsc"></label>
 			<input type="button" value="검색" id="btnSearch">
 		</form>
-	</div>
+	</div>  
 
 </body>
 </html>
