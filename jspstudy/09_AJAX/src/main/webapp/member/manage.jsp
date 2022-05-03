@@ -67,9 +67,11 @@
 				url: '/AJAX/detail.do',
 				data: 'no=' + no,
 				type: 'get',     // 지정된 리소스로부터 데이터를 요청한다, 보통 서버로부터 데이터를 가져온다.
+							     // select, delete -> get (post보다 속도가 빠름)
 				dataType: 'json',
 				success: function(responseText) {   // responseText : {"result": true, "member": {}, {"result": false}}
 					if(responseText.result == true) {
+						$('#no').val(responseText.member.no);
 						$('#id').val(responseText.member.id).prop('readonly', true);
 						$('#name').val(responseText.member.name);
 						$(':radio[name="gender"][value="' + responseText.member.gender + '"]').prop('checked', true);
@@ -105,6 +107,7 @@
 				url: '/AJAX/add.do',
 				type: 'POST',     // 처리할 데이터를 지정된 리소스에게 제출한다, 
 				                  // 서버로부터 데이터를 가져오지만, 보통 요청으로부터 데이터를 보내는데 사용한다.
+				                  // insert, update -> post
 				// data: 'id=' + $('#id').val() + '&name=' + $('#name').val() + '&gender=' + $(':radio[name="gender"]:checked').val() + '&address=' + $('#address').val(),
 				data: $('#formMember').serialize(),    // 폼의 모든 요소를 줄줄이 &로 연결해서 보낸다.
 				// 여기까지 요청
@@ -151,12 +154,17 @@
 		$('#btnRemove').on('click', function(){
 			$.ajax({
 				url: '/AJAX/delete.do',
+				data: 'no=' + $('#no').val(),
 				type: 'get',
 				dataType: 'json',
 				success: function(responseText){
 					if(responseText.res > 0) {
 						alert('회원 정보가 삭제되었습니다.');
 						fnList();
+						$('#id').val('').prop('readonly', false);
+						$('#name').val('');
+						$(':radio[name="gender"]').prop('checked', false);
+						$('#address').val('');  
 					} else {
 						alert('회원 정보 삭제가 실패했습니다.');
 					}
@@ -182,6 +190,7 @@
 	<h1>회원관리</h1>
 	<div>
 		<form id="formMember">
+			<input type="hidden" name="no" id="no">
 			<label for="id">
 				아이디
 				<input type="text" name="id" id="id">
