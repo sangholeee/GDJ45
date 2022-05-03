@@ -8135,3 +8135,27 @@ java.lang.Error: SWT Resource was not properly disposed
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:653)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:590)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1461)
+
+!ENTRY org.eclipse.egit.core 4 0 2022-05-03 14:36:07.883
+!MESSAGE An exception occurred during push on URI https://github.com/sangholeee/GDJ45.git: https://github.com/sangholeee/GDJ45.git: not authorized
+!STACK 0
+org.eclipse.jgit.errors.TransportException: https://github.com/sangholeee/GDJ45.git: not authorized
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:685)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:627)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:541)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:127)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1384)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:191)
+	at org.eclipse.egit.ui.internal.push.ConfirmationPage$2.run(ConfirmationPage.java:210)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2022-05-03 14:44:01.169
+!MESSAGE Publishing failed with multiple errors
+!SUBENTRY 1 org.eclipse.wst.server.core 4 0 2022-05-03 14:44:01.169
+!MESSAGE Could not delete C:\GDJ45\jspstudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\09_AJAX\WEB-INF\lib\json-20211205.jar. May be locked by another process.
+!SUBENTRY 1 org.eclipse.wst.server.core 4 0 2022-05-03 14:44:01.169
+!MESSAGE Could not delete C:\GDJ45\jspstudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\09_AJAX\WEB-INF\lib\lombok-1.18.22.jar. May be locked by another process.
+!SUBENTRY 1 org.eclipse.wst.server.core 4 0 2022-05-03 14:44:01.169
+!MESSAGE Could not delete C:\GDJ45\jspstudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\09_AJAX\WEB-INF\lib\mybatis-3.5.9.jar. May be locked by another process.
+!SUBENTRY 1 org.eclipse.wst.server.core 4 0 2022-05-03 14:44:01.169
+!MESSAGE Could not delete C:\GDJ45\jspstudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\09_AJAX\WEB-INF\lib\ojdbc6.jar. May be locked by another process.
