@@ -30,8 +30,8 @@
 			<label for="asc">낮은가격순<input type="radio" name="sort" id="asc" value="asc"></label>
 			<label for="dsc">높은가격순<input type="radio" name="sort" id="dsc" value="dsc"></label>
 			<input type="button" value="검색" id="btnSearch">
-		</form>    
-	</div>       
+		</form>
+	</div>  
 
 </body>
 </html>
