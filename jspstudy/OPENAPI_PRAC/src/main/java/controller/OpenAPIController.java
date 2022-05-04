@@ -8,13 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
+import service.Covid19InfStateService;
+import service.GuroPointFocInfoService;
 import service.SearchService;
+import service.TourStnInfoService;
 
 @WebServlet("*.do")
-public class SearchController extends HttpServlet {
+public class OpenAPIController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SearchController() {
+    public OpenAPIController() {
         super();
     }
 
@@ -36,9 +39,28 @@ public class SearchController extends HttpServlet {
 			SearchService service = new SearchService();
 			service.execute(request, response);
 			break;
-		
+		case "guroPointFocInfoSvcPage.do":
+			af = new ActionForward("guro/guro.jsp", false);
+			break;
+		case "guroPointFocInfoSvc.do":
+			GuroPointFocInfoService service2 = new GuroPointFocInfoService();
+			service2.execute(request, response);
+			break;
+		case "covid19InfStatePage.do":
+			af = new ActionForward("covid/covid.jsp", false);
+			break;
+		case "covid19InfState.do":
+			Covid19InfStateService service3 = new Covid19InfStateService();
+			service3.execute(request, response);
+			break;
+		case "tourStnInfoPage.do":
+			af = new ActionForward("tour/tour.jsp", false);
+			break;
+		case "tourStnInfo.do":
+			TourStnInfoService service4 = new TourStnInfoService();
+			service4.execute(request, response);
+			break;
 		}
-		
 		
 		if(af != null) {
 			if(af.isRedirect()) {
@@ -47,10 +69,6 @@ public class SearchController extends HttpServlet {
 				request.getRequestDispatcher(af.getView()).forward(request, response);
 			}
 		}
-		
-	
-		
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

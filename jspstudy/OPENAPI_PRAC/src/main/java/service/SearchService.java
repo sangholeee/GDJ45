@@ -15,6 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class SearchService {
+
+	private void error(HttpServletResponse response, String msg) throws IOException {
+		response.setContentType("text/plain; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.write(msg);
+		out.flush();
+		out.close();
+	}
+	
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		
@@ -28,6 +37,7 @@ public class SearchService {
 			query = URLEncoder.encode(query, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			// 검색어 인코딩 실패
+			error(response, "검색어 인코딩 실패");
 		}
 		
 		// API 접속
@@ -39,8 +49,10 @@ public class SearchService {
 			con = (HttpURLConnection)url.openConnection();
 		} catch (MalformedURLException e) {
 			// 잘못된 형식의 apiURL
+			error(response, "잘못된 형식의 apiURL");
 		} catch (IOException e) {
 			// apiURL 연결 실패
+			error(response, "apiURL 연결 실패");
 		}
 		
 		// 요청 header + method
@@ -50,6 +62,7 @@ public class SearchService {
 			con.setRequestProperty("X-Naver-Client-Secret", "6gn_k7Uulc");
 		} catch (Exception e) {
 			// 신경 쓰지 않겠다.
+			error(response, "API 요청 실패");
 		}
 		
 		// 응답할 스트림(성공하면 정상 스트림, 실패하면 에러 스트림)
@@ -72,6 +85,7 @@ public class SearchService {
 			br.close();
 		} catch (IOException e) {
 			// API 응답 실패
+			error(response, "API 응답 실패");
 		}
 		
 		// API 연결 종료
@@ -84,15 +98,6 @@ public class SearchService {
 		out.write(sb.toString());
 		out.flush();
 		out.close();
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 
 }
