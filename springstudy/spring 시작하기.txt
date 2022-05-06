@@ -1,0 +1,109 @@
+- STS(Spring Tool Suite)
+- 이클립스 기반의 Spring Tool
+
+- Tomcat 대신 pivotal-tc-server 서버가 설치되어있다.
+- 제거 후 Tomcat 설치가 필요하다.
+- window - preference - Server Runtime Environments -> 원래 있던거 제거 후 Tomcat 9.0 add
+- 하단의 Servers에서 Tomcat 추가
+- 포트번호 9090
+
+- window - preference - Run/Debug - Console - Limit 해제
+
+- 테마
+- 글꼴
+- 인코딩 Web - css,html,jsp --- UTF-8
+- syntax coloring(class pink, method orange, interface gray)
+- window - web browser - chrome
+
+1. 압축 풀기
+1) spring-tool-suite-3.9.18.RELEASE-e4.19.0-win32-x86_64.zip
+2) 결과
+    installer
+      ㄴ sts-bundle
+
+2. lombok 설치하기
+1) cmd 이용 설치
+     C:\GDJ45\installer\jar>  java -jar lombok-1.18.22.jar
+2)   C:\GDJ45\installer\sts-bundle\sts-3.9.18.RELEASE\STS.exe 선택 후 설치
+
+3. springstudy 폴더 만들기
+
+4. STS.exe 실행 후
+   workspace로 springstudy 선택
+
+
+-----------------------------------------------------------------------------
+Spring stater project - boot
+Spring legacy project - MVC 
+
+- 3단 패키지 이상
+  ex) com.goodee.ex01   -> ex01 : context path
+      base package :
+      com.goodee -> group id // ex01 : artifact id는 unique 해야 함.
+      
+
+- java-java
+- resources - (context, mybatis..)
+- test - TestCase(JUnit)
+- webapp = web root
+    ㄴ resource - static cile(image, css, js ...)
+- views - jsp
+- pom.xml - library 등록 시킬 수 이게 작업(jar)
+
+- pom.xml 변경내용
+  -> 내용을 변경 후 저장하면 인터넷에서 필요한 정보를 받아온다. 그러니 저장 X, 변경만
+  -> <java-version>11</java-version>
+
+  -> <org.springframework-version>5.3.3</org.springframework-version>
+
+  -> <org.aspectj-version>1.9.6</org.aspectj-version>
+
+  -> <org.slf4j-version>1.7.30</org.slf4j-version>
+
+  -> <dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>4.0.1</version>
+	<scope>provided</scope>
+	</dependency>
+
+  -> <!-- java-version으로 source, target을 바꾸면 됨. -->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.5.1</version>
+          <configuration>
+              <source>${java-version}</source>
+              <target>${java-version}</target>
+              <compilerArgument>-Xlint:all</compilerArgument>
+              <showWarnings>true</showWarnings>
+              <showDeprecation>true</showDeprecation>
+          </configuration>
+      </plugin>
+
+  -> <dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.13.1</version>
+	<scope>test</scope>
+     </dependency>        
+
+
+  - version 에서 alpha 버전은 개발자들끼리 아직 개발 중
+  -              beta 버전 일반인들에게 배포는 되었지만 아직 개발 중
+
+
+
+- https://mvnrepository.com/    -> jar 저장소
+  -> springframework, aspectj 검색
+
+- pom.xml 변경사항 저장 후 Project에서 [Maven] - [Update Project] 해야 반영된다.
+
+
+
+
+
+
+
+
+
