@@ -22,7 +22,7 @@
 				dataType: 'xml',
 				success: function(responseText){
 					console.log(responseText);
-					/*
+					
 					$('#infState').empty();
 					$.each($(responseText).find('item'), function(i, item) {
 						var tr = '<tr>';
@@ -32,7 +32,7 @@
 						tr += '<td>' + $(item).find('deathCnt').text() + '</td>';
 						$('#infState').append(tr);
 					})
-					*/
+					
 				}
 			})
 		})	
