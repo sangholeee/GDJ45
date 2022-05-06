@@ -6,10 +6,6 @@ public class Car {
 	private String model;     // xDrive_40d
 	private int price;        // 13140
 	private Engine engine;	  
-	
-	public Car() {
-		
-	}
 
 	public String getModel() {
 		return model;

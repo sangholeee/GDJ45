@@ -7,10 +7,6 @@ public class Engine {
 	private double efficiency;    // 연비(10.4)
 	private int hp;              // 출력(340)
 	private int cc;				 // 배기량(2993)
-	
-	public Engine() {
-		
-	}
 
 	public String getFuel() {
 		return fuel;
