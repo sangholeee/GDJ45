@@ -15,5 +15,5 @@
 		<property name="price" value="13140"/>
 		<property name="engine" ref="engine"/>
 	</bean>
- 
+
 </beans>
