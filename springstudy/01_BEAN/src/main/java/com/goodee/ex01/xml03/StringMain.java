@@ -17,7 +17,6 @@ public class StringMain {
 		if(con != null) {
 			con.close();
 		}
-		
 		ctx.close();
 	}
 
