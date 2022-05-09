@@ -13,6 +13,8 @@ public class SpringMain {
 		
 		car.info();     // 모델, 가격, 엔진 정보 출력하기
 		
+		ctx.close();
+		
 		
 	}
 
