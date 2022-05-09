@@ -15,8 +15,8 @@
  		<property name="gun" ref="gun1"/>
  		<property name="army">
  			<map>
- 				<entry key="부대명" value="백골"/>
- 				<entry key="부대위치" value="철원"/>
+ 				<entry key="name" value="백골"/>
+ 				<entry key="location" value="철원"/>
  			</map>
  		</property>
  	</bean>

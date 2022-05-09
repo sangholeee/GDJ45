@@ -22,8 +22,8 @@ public class SpringBeanConfig {
 	public Soldier b() {
 		
 		Map<String, String> army = new HashMap<String, String>();
-		army.put("부대명", "이기자");
-		army.put("부대위치", "화천");
+		army.put("name", "이기자");
+		army.put("location", "화천");
 		
 		Soldier soldier = new Soldier(); 
 		soldier.setName("박중사");
