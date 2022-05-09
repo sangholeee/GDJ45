@@ -44,24 +44,5 @@ public class SpringBeanConfig {
 		//	  <constructor-arg value="이예준"/>
 		//    <constructor-arg ref="mySong"/>
 		// </bean>
-		
-		
 	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
-
 }
