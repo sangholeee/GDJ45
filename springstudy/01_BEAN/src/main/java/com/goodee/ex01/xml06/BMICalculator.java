@@ -46,34 +46,4 @@ public class BMICalculator {
 		System.out.println("BMI : " + bmi);
 		System.out.println("health : " + health);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

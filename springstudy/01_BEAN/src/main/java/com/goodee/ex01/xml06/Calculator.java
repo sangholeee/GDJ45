@@ -2,10 +2,6 @@ package com.goodee.ex01.xml06;
 
 public class Calculator {
 	
-	public Calculator() {
-		
-	}
-	
 	// method
 	public double add(double a, double b) {
 		return a + b;
@@ -22,6 +18,5 @@ public class Calculator {
 	public double mod(double a, double b) {
 		return a % b;
 	}
-
 
 }

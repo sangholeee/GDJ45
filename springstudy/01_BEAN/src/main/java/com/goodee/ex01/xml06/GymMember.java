@@ -49,6 +49,4 @@ public class GymMember {
 		System.out.println("course : " + course.toString());
 		bmiCalculator.info();
 	}
-	
-	
 }

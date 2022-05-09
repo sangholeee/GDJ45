@@ -11,10 +11,9 @@ public class SpringMain {
 		
 		GymMember member = ctx.getBean("gymMember", GymMember.class);
 		
-		member.info();
+		member.info();     // 이름, 등록과정, 키, 몸무게, BMI, 건강상태 출력하기
 		
 		ctx.close();
 		
 	}
-
 }
