@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Exam -->
+	<bean class="com.goodee.ex01.xml05.Exam" id="exam">
+		<property name="scores">
+			<list>
+				<value>98</value>
+				<value>67</value>
+				<value>72</value>
+				<value>88</value>
+				<value>46</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!-- Student -->
+	<bean class="com.goodee.ex01.xml05.Student" id="stu">
+		<property name="name" value="ChangMo"/>
+		<property name="exam" ref="exam"/>
+		<property name="pInfo">
+			<map>
+				<entry key="address" value="덕소"/>
+				<entry key="phone" value="031-273-6685"/>
+			</map>
+		</property>
+	</bean>
+
+</beans>
