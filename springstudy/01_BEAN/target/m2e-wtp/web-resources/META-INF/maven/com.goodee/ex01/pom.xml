@@ -15,7 +15,7 @@
 	<!-- pom.xml의 수정된 내용을 반영하려면 [Maven] - [Update Project]를 해야해. -->
 	
 	<!-- properties 태그에서는 각종 version을 세팅하는데 각 version이 release된 날짜를 보고 맞추는 게 좋아. -->
-	<!-- spring이 기준 version이고 다른 것들은 spring과 같은 날짜 또는 이전에 배포된 날짜로 맞추는 방식을 써. -->
+	<!-- springframework-version을 기준으로 다른 것들을 spring과 같은 날짜 또는 이전에 배포된 날짜로 맞추는 방식을 써. -->
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.3</org.springframework-version>

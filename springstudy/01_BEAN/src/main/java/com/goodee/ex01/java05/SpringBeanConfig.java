@@ -31,5 +31,7 @@ public class SpringBeanConfig {
 		soldier.setArmy(army);
 		
 		return soldier;
+		
+		// return new Soldier("박중사", gun2(), army);
 		}
 }

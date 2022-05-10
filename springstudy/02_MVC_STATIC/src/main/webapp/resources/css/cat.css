@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.cat {
+	background-image: url('/ex02/assets/images/cat.jpg');
+	width: 640px;
+	height: 480px;
+	background-size: 640px 480px;
+	
+}
