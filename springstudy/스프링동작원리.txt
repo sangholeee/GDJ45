@@ -22,5 +22,5 @@
 
 9. DispatcherServlet이 응답할 뷰로 이동한다.
 
-
+* annotation 공부해야함.
 

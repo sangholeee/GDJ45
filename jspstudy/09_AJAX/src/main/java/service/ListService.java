@@ -38,17 +38,16 @@ public class ListService implements MemberService {
 		// 중괄호로 열리는건 JSONObject
 		// 대괄호로 열리는건 JSONArray
 		
-		JSONObject obj = new JSONObject();
-		obj.put("count", MemberDAO.getInstance().getTotalCount());
-		obj.put("members", MemberDAO.getInstance().selectMemberList());
+		 JSONObject obj = new JSONObject();
+		 obj.put("count", MemberDAO.getInstance().getTotalCount());
+		 obj.put("members", MemberDAO.getInstance().selectMemberList());
+		
 		
 		// 응답하기
 		PrintWriter out = response.getWriter();
 		out.write(obj.toString());
 		out.flush();
 		out.close();
-		
-		
 		
 	}
 
