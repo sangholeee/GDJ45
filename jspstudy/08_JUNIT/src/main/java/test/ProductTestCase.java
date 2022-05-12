@@ -49,7 +49,7 @@ class ProductTestCase {
 		// assertEquals(예상값, 실제발생한값, [실패시메시지 생략가능])
 		// expected : 예상값
 		// actual : 실제발생한값
-		assertEquals(1, res, "제품 등록 실패");
+		assertEquals(1, res, "저장할 수 없는 값이 전달되었습니다.");
 		
 	}
 		
