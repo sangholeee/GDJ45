@@ -103,17 +103,4 @@ public class Controller1 {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

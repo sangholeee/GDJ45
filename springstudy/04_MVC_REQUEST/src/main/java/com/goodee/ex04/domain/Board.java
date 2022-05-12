@@ -53,7 +53,7 @@ public class Board {
 		
 		// hit() 메소드
 		public Builder hit(Long hit) {
-			this.hit = hit;
+			this.hit = hit; 
 			return this;
 		}
 		
