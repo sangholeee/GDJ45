@@ -33,7 +33,7 @@ public class Controller2 {
 	 		model.addAttribute("속성", 전달할 값);
 	 		return "JSP이름";
 	 	}
-	 	
+	 	  
 	 
 	 */
 	
