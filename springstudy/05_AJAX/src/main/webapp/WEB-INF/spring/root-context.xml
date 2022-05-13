@@ -8,5 +8,6 @@
 	<!-- MemberServiceImple -->
 	<!-- Java로 Bean을 만들때에는 MemberService 사용 가능, 여기선 Impl로 가능 -->	
 	<bean class="com.goodee.ex05.service.MemberServiceImpl" id="memberService"/>
-		
+	
+	<bean class="com.goodee.ex05.service.BoardServiceImpl" id="boardService"/>	
 </beans>
