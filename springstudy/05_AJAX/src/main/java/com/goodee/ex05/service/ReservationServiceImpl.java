@@ -1,12 +1,16 @@
 package com.goodee.ex05.service;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 
 import com.goodee.ex05.domain.ReservationDTO;
 
@@ -37,9 +41,9 @@ public class ReservationServiceImpl implements ReservationService {
 		header.add("Content-Type", "application/json; charset=UTF-8");
 		
 		if(no > 0) {
-			responseEntity = new ResponseEntity<ReservationDTO>(reservation, header, HttpStatus.OK);      // ajax의 success로 전달된다.
+			responseEntity = new ResponseEntity<ReservationDTO>(reservation, header, HttpStatus.OK);          // ajax의 success로 전달된다.
 		} else {
-			responseEntity = new ResponseEntity<ReservationDTO>(null, header, HttpStatus.BAD_REQUEST);    // ajax의 error로 전달된다.
+			responseEntity = new ResponseEntity<ReservationDTO>(null, header, HttpStatus.BAD_REQUEST);        // ajax의 error로 전달된다.
 		}
 		
 		return responseEntity;
@@ -57,7 +61,39 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public ResponseEntity<ReservationDTO> detail3(ReservationDTO reservation) {
 		
-		return null;
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);       // "application/json"
+		
+		// no가 100을 초과하면 저장할 수 없는 데이터로 가정
+		
+		ResponseEntity<ReservationDTO> responseEntity = null;
+		
+		if(reservation.getNo() <= 100) {
+			responseEntity = new ResponseEntity<ReservationDTO>(new ReservationDTO(reservation.getNo(), "예약자"), header, HttpStatus.OK); 
+		} else {
+			responseEntity = new ResponseEntity<ReservationDTO>(null, header, HttpStatus.INTERNAL_SERVER_ERROR);   // status : 500
+		}
+		return responseEntity;
+	}
+	
+	@Override
+	public ResponseEntity<byte[]> image() {
+		
+		File file = new File("D:", "hedgehog.jpg"); 
+		ResponseEntity<byte[]> result = null;
+		
+		try {
+			byte[] b = FileCopyUtils.copyToByteArray(file);
+			HttpHeaders header = new HttpHeaders();
+			String contentType = Files.probeContentType(file.toPath());
+			header.add("Content-Type", contentType);
+			result = new ResponseEntity<byte[]>(b, header, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+		 
 	}
 
 }

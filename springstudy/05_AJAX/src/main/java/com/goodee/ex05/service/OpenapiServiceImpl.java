@@ -8,13 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
 
 public class OpenapiServiceImpl implements OpenapiService {
 
 	@Override
-	public Map<String, Object> dailyBoxOffice(String targetDt) {
+	public String dailyBoxOffice(String targetDt) {
 		
 		String serviceKey = "bff0fcfdd438435ac5f9356cb035e0fc";
 		
@@ -68,10 +66,8 @@ public class OpenapiServiceImpl implements OpenapiService {
 			e.printStackTrace();
 		}
 		
-		Map<String, Object> res = new HashMap<String, Object>();
-		res.put("res", sb2.toString());
 		
-		return res;
+		return sb2.toString();
 		
 	}
 

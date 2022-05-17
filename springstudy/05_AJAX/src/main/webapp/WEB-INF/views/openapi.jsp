@@ -28,7 +28,6 @@
 	function fnAjax(){
 		
 			
-		$('#result').empty();
 		$.ajax({
 				
 			url: '${contextPath}/openapi/dailyBoxOffice',
@@ -37,6 +36,7 @@
 				
 			dataType: 'json',
 			success: function(res){
+				$('#result').empty();
 				console.log(res);
 				$.each(res.boxOfficeResult.dailyBoxOfficeList, function(i, list){
 					var tr = '<tr>';

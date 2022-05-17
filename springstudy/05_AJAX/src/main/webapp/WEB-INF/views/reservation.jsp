@@ -79,6 +79,32 @@
 	
 	function fnAjax3(){
 		
+		// 요청 JSON, 응답 ResponseEntity
+		// no = 1 요청하면 no = 1, name = 예약자 반환받기
+		
+		$.ajax({
+			url: '${contextPath}/reservation/detail3',
+			type: 'post',
+			data: JSON.stringify({'no': $('#no').val()}),
+			contentType: 'application/json',
+			
+			dataType: 'json',
+			success: function(reservation){
+				$('#result').empty();
+				$('<ul>')
+				.append($('<li>').text(reservation.no))
+				.append($('<li>').text(reservation.name))
+				.appendTo('#result');
+			},
+			error: function(jqXHR){
+				if(jqXHR.status == 500) {
+					alert('예약번호는 100이하의 숫자 입니다.');
+				}
+				$('#result').empty();
+				$('#result').text(jqXHR.responseText);
+			}
+		})
+		
 	}   // fnAjax3
 
 </script>
@@ -93,7 +119,17 @@
 	<hr>
 	
 	<div id="result"></div>
-
-
+	
+	<hr>
+	
+	<!-- 
+		<img> 태그는 절대 경로의 이미지를 표시하지 못한다.
+		절대 경로의 이미지는 ajax 통신으로 이미지를 읽어 들인다.
+		jQuery.ajax는 사용하지 않는다.
+		C:/hedgehog.jpg 이미지를 읽어 올 것이다.
+	 -->
+	 
+	 <img alt="hedgehog.jpg" src="${contextPath}/reservation/image">
+	 
 </body>
 </html>
