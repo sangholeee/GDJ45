@@ -35,10 +35,10 @@
 			data: 'targetDt=' + $('#targetDt').val(),
 				
 			dataType: 'json',
-			success: function(res){
+			success: function(result){
 				$('#result').empty();
-				console.log(res);
-				$.each(res.boxOfficeResult.dailyBoxOfficeList, function(i, list){
+				console.log(result);
+				$.each(result.boxOfficeResult.dailyBoxOfficeList, function(i, list){
 					var tr = '<tr>';
 					tr += '<td>' + list.movieNm + '</td>';
 					tr += '<td>' + list.rank + '</td>';

@@ -17,8 +17,9 @@ public class OpenapiController {
 	private OpenapiService openapiService;
 	
 	@ResponseBody
-	@GetMapping(value="/openapi/dailyBoxOffice")
-	public String dailyBoxOffiec(@RequestParam String targetDt) {
+	@GetMapping(value="/openapi/dailyBoxOffice",
+				produces="application/json; charset=UTF-8")
+	public String dailyBoxOffice(@RequestParam String targetDt) {
 		return openapiService.dailyBoxOffice(targetDt);
 	}
 }

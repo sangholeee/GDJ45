@@ -1,0 +1,57 @@
+학습순서
+
+1. pom.xml
+   1) 버전 최신화 하기
+   2) ojdbc6 라이브러리 다운로드
+      (1) 별도의 repository 등록
+      (2) dependency 추가
+   3) lombok dependency 추가
+   4) spring-test dependency 추가(Junit 단위 테스트) - 스프링버전은 이름을 넣어주기
+
+2. web.xml
+   인코딩 필터 태그 넣기
+
+3. webapp/resources/sql
+   board.sql 작성 (실행할 수 있는 기능이 STS3에 설치되어 있지 않기 때문에 SQL DEVELOPER로 실행)
+
+
+4. webapp/META-INF 디렉터리 생성하기
+   context.xml 작성
+   -> tomcat 서버가 가지고 있는 context.xml에 작성해도 상관 없음.(Servers->context.xml)
+   
+5. BoardConfig.java를 이용해서 bean 작성
+
+6. JUnit 단위 테스트
+   - src/text/java 패키지 JUnitTestCase 추가(스프링은 일반 클래스 사용가능)
+   - JUnit 버전에 맞는 SpringJUnitClassRunner 클래스 등록
+   - bean을 만들도록 설정
+
+
+
+
+
+
+
+
+
+
+
+
+
+* lombok 사용
+1. STS.exe에 설치 (STX 재시작 필요)
+2. pom.xml에 dependency 추가
+3. 각종 애너테이션 사용
+4. 전 과정이 순서대로 처리되어야 함.
+   - 어디서 프로젝트를 가져왔는데 lombok이 사용되어 있다.
+   - STS.exe에 lombok을 설치하고,
+   - pom.xml에 dependency를 추가하였다.
+   - 그런데 안 된다.
+   - 기존 lombok 애너에티션을 다 지우고, 다시 추가하면 된다.
+
+
+
+
+
+
+   
