@@ -41,7 +41,7 @@
 			dataType: 'json',
 			success: function(obj){
 				var tr = '<tr>';
-				tr += '<td>제목 : ' + obj.title + '</td>';
+				tr += '<td>제목 : ' + obj.title + '&nbsp&nbsp</td>';
 				tr += '<td>조회수 : ' + obj.hit + '</td>';
 				$('#result').append(tr);
 			},
@@ -67,7 +67,7 @@
 			dataType: 'json',
 			success: function(obj){
 				var tr = '<tr>';
-				tr += '<td>제목 : ' + obj.title + '</td>';
+				tr += '<td>제목 : ' + obj.title + '&nbsp&nbsp</td>';
 				tr += '<td>조회수 : ' + obj.hit + '</td>';
 				$('#result').append(tr);
 			},
@@ -99,7 +99,7 @@
 			dataType: 'json',
 			success: function(obj){
 				var tr = '<tr>';
-				tr += '<td>제목 : ' + obj.title + '</td>';
+				tr += '<td>제목 : ' + obj.title + '&nbsp&nbsp</td>';
 				tr += '<td>조회수 : ' + obj.hit + '</td>';
 				$('#result').append(tr);
 			},
@@ -131,7 +131,7 @@
 			dataType: 'json',
 			success: function(obj){
 				var tr = '<tr>';
-				tr += '<td>제목 : ' + obj.title + '</td>';
+				tr += '<td>제목 : ' + obj.title + '&nbsp&nbsp</td>';
 				tr += '<td>조회수 : ' + obj.hit + '</td>';
 				$('#result').append(tr);
 			},

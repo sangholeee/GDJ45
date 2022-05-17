@@ -151,6 +151,7 @@
 			// contentType 이라는 속성으로 작업합니다.
 			// 요청 데이터 타입을 확인하는 건 자바 측이기 때문에
 			// 자바가 사용하는 JSON의 타입인 'application/json' 이라고 작성해 줘야 합니다.
+			// 요청하는 데이터를 json->객체로 바꿔서 Controller로 넘겨주기 위한 과정(jackson).
 			contentType: 'application/json',
 			
 			/* 응답 */

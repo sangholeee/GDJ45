@@ -9,5 +9,15 @@
 	<!-- Java로 Bean을 만들때에는 MemberService 사용 가능, 여기선 Impl로 가능 -->	
 	<bean class="com.goodee.ex05.service.MemberServiceImpl" id="memberService"/>
 	
+	<!-- BoardServiceImple -->
 	<bean class="com.goodee.ex05.service.BoardServiceImpl" id="boardService"/>	
+	
+	<!-- ProductServiceImple -->
+	<bean class="com.goodee.ex05.service.ProductServiceImpl" id="productService"/>
+
+	<!-- ReservationServiceImple -->
+	<bean class="com.goodee.ex05.service.ReservationServiceImpl" id="reservationService"/>
+	
+	<!-- OpenapiServiceImple -->
+	<bean class="com.goodee.ex05.service.OpenapiServiceImpl" id="openapiService"/>
 </beans>

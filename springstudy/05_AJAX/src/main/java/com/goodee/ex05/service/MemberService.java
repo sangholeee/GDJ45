@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.goodee.ex05.domain.MemberDTO;
 
-// 기능별로 메소드를 사용한다.
+// 기능별로 메소드를 정의(사용)한다.
 
 public interface MemberService {
 	

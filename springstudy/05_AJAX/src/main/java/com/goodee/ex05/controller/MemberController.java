@@ -31,25 +31,7 @@ public class MemberController {
 	// 필드, 생성자, setter 방식 중 필드 주입 방식 사용해 봅니다.
 	@Autowired
 	private MemberService memberService;
-	
-	
-	@GetMapping("/")
-	public String index() {
-		return "index";     // index.jsp
-	}
-	
-	@GetMapping("/member")
-	public String member() {
-		return "member";    // member.jsp
-	}
-	
-	// @RestController를 사용하기 위해 BoardController -> MemberController 이동
-	@GetMapping(value="/board")   // ${contextPath}/board 요청이 오면,
-	public String board() {
-		return "board";           // board.jsp로 이동하자.
-	}
-	
-	
+			
 	// 컨트롤러의 메소드는 기본적으로 JSP이름을 반환한다.
 	
 	// Ajax는 JSP 이름을 반환하는 것이 아니라
@@ -69,7 +51,7 @@ public class MemberController {
 	
 	
 	@GetMapping(value="/member/detail2",
-				produces = "application/json; charset=UTF-8")         // 내가 반환하는 값은 JSON 입니다.
+				produces = "application/json; charset=UTF-8")         // 내가 반환하는 값은 JSON(:jackson) 입니다.
 	@ResponseBody       // 내가 반환하는 건 JSP 이름이 아니라 어떤 값(텍스트, XML, JSON 등)이에요.
 	
 	// 반환타입 MemberDTO는 jackson에 의해서 JSON 데이터로 자동 변환됩니다.

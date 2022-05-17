@@ -34,7 +34,30 @@
 5) @RequestMapping(value = "/", method = RequestMethod.GET)
    - URLMapping을 처리하는 애너테이션이다.
    - 메소드마다 하나씩 가져가야 한다.
-   
+   - 속성
+	1) value : URLMapping 작성
+	2) method : 요청 메소드 작성(GET, POST)
+
+--------03_MVC_DI
+
+6) @Autowired
+   - bean의 타입(class)이 일치하는 bean을 찾아서 주입하는 방식(주의. bean의 이름(id)를 찾는 방식이 아님)
+   - 필드, 생성자, setter에서 사용하는데 상황에 따라 생략
+
+* DI
+
+  1. Dependency Injection
+  2. 의존성 주입
+  3. 스프링 컨테이너에 있는 bean을 스프링이 주입하는 방법
+  4. 방법
+     1) 필드에 직접 주입       -> 필드가 많은 경우 사용하지 않는 것이 좋다.
+     2) 생성자를 이용해서 주입 -> @Autowired 안 적어도 된다.
+     3) setter를 이용해서 주입
+
+7) @Qualifier(value="board1")    // <qualifier value="board1"/> 이 bean을 주입해 주세요.
+   - @Autowired는 class로 bean을 인식하기 때문에 
+     id="board1"과 id="board2"를 다를 bean으로 인식하지 못한다.
+
 
 
 
