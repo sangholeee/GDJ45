@@ -12,4 +12,5 @@ public class Student {
 	private double avg;
 	private String grade;
 
+
 }

@@ -1,0 +1,7 @@
+summernote
+
+lite = min(최소한의 용량으로 만든 파일)
+
+css와 js 파일 src/webapp/resources/css와 js 폴더에 넣기
+
+////// 그냥 js, css 폴더 or resources 밑에 압축 푼 파일 통째로 박으면 편함!

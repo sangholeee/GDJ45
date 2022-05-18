@@ -1,0 +1,9 @@
+JDBC : DataSource 없이 Connection 을 하나만 사용하는 초기 버전
+	BoardRepository.java
+	BoardTestCase.java
+
+
+
+DBCP : DataSource 이용해 Connection을 여러 개 사용하는 버전
+	BoardRepository.java - context.xml 정보 사용(Tomcat이 실행 되어야 context.xml을 읽어옴)
+	BoardTestCase.java - Tomcat 없이 단위 테스트 동작 중
