@@ -16,6 +16,7 @@
 	<a href="${contextPath}/board/addPage">새글작성</a>
 
 	<table border="1">
+		<caption>전체게시글 ${totalCount}개</caption>
 		<thead>
 			<tr>
 				<td>게시글번호</td>
@@ -34,7 +35,7 @@
 					<td>${board.writer}</td>
 					<td>${board.hit}</td>
 					<td>${board.created}</td>
-					<td><a href="${contextPath}/board/no=${board.no}"><i class="fa-solid fa-trash-can"></i></a></td>
+					<td><a href="${contextPath}/board/remove?no=${board.no}"><i class="fa-solid fa-trash-can"></i></a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -45,8 +45,6 @@ public class BoardRepository {
 	}
 	
 	
-	
-	
 	public List<BoardDTO> selectBoards(){
 		List<BoardDTO> boards = new ArrayList<>();
 		try {
@@ -123,11 +121,14 @@ public class BoardRepository {
 		int res = 0;
 		try {
 			con = getConnection();
-			sql = "INSERT INTO BOARD(NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, LASTMODIFIED) VALUES(BOARD_SEQ.NEXTVAL, ?, ?, ?, 1, 0, SYSDATE, SYSDATE)";
+			sql = "INSERT INTO BOARD(NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, LASTMODIFIED) VALUES(BOARD_SEQ.NEXTVAL, ?, ?, ?, ?, 0, SYSDATE, SYSDATE)";
+			// 날짜 관련 타입이 sql에서 선언이 TIMESTAMP로 되어 있으면 SYSTIMESTAMP로 작성해줘야 한다.
+			// BoardDTO에서는 Timestamp(java.sql)로 해주면 된다.
 			ps = con.prepareStatement(sql);
 			ps.setString(1, board.getWriter());
 			ps.setString(2, board.getTitle());
 			ps.setString(3, board.getContent());
+			ps.setString(4, board.getIp());
 			res = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

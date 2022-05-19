@@ -7,13 +7,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="../resources/js/jquery-3.6.0.js"></script>
+<script>
+
+	$(document).ready(function(){
+		$('#f').on('submit', (event)=>{
+			alert('수정이 완료되었습니다.');
+		})
+	})
+
+</script>
 </head>
 <body>
 
 	
 	<h1>게시글 수정화면</h1>
 	
-	<form action="${contextPath}/board/modify" method="post">
+	<form id="f" action="${contextPath}/board/modify" method="post">
 	
 		<div>글번호 ${board.no}</div>
 		<div>작성자 ${board.writer}</div>
@@ -28,7 +38,7 @@
 			<textarea name="content" rows="5" cols="30">${board.content}</textarea>
 		</div>
 		<div>
-			<input type="hidden" name="board_no" value="${board.no}">
+			<input type="hidden" name="no" value="${board.no}">
 			<button>수정</button>
 			<input type="button" value="목록" onclick="location.href='${contextPath}/board/list'">
 		</div>
