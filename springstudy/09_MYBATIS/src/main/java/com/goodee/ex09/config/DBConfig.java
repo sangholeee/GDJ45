@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -15,6 +18,7 @@ import com.zaxxer.hikari.HikariDataSource;
 // mybatis/properties/db.properties 파일의 내용을 참조하겠습니다.
 @PropertySource(value={"mybatis/properties/db.properties"})
 
+@EnableTransactionManagement
 @Configuration
 public class DBConfig {
 
@@ -58,6 +62,13 @@ public class DBConfig {
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate() throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory());
+	}
+	
+	// 트랜잭션 매니저
+	// 트랜잭션 매니저의 동작을 위해서 DBConfig에 @EnableTransactionManagement 애너테이션을 추가해야 한다.
+	@Bean
+	public TransactionManager transactionManager() {
+		return new DataSourceTransactionManager(dataSource());
 	}
 	
 	
