@@ -24,7 +24,7 @@ public class BookRepository {
 	
 	public List<BookDTO> selectBookList() {
 		sql = "SELECT BOOK_NO, TITLE, AUTHOR, PRICE, PUBDATE, REGDATE FROM BOOK ORDER BY BOOK_NO DESC";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(BookDTO.class));                          // 모든 row를 반환한다. , 뒤에 붙이면 전달할 값도 전달 가능한다.
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(BookDTO.class));                          // query : 모든 row를 반환한다. , 뒤에 붙이면 전달할 값도 전달 가능한다.
 	}
 	
 	public BookDTO selectBookByNo(final Long book_no) {    // 과거에는 final이 매개변수에 안적혀있으면 동작하지 않던 때가 있었다.

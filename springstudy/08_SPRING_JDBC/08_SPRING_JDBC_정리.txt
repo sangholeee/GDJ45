@@ -1,0 +1,64 @@
+1. 
+    <form id="f" action="${contextPath}/book/change" method="post">
+		<input type="text" name="title" id="title" value="${book.title}"><br>
+		<input type="text" name="author" id="author" value="${book.author}"><br>
+		<input type="text" name="price" id="price" value="${book.price}"><br>
+		출판일 : ${book.pubdate}<br>
+		등록일 : ${book.regdate}<br>
+		<input type="hidden" name="book_no" value="${book.book_no}">
+		<button>수정</button>
+		<input type="button" value="삭제" id="btnRemove">
+		<input type="reset" value="다시작성" id="btnReset">
+		<input type="button" value="목록" id="btnList">
+	</form>
+
+- reset은 value를 부여했을 때의 첫 화면으로 되돌아가게 해주는 기능
+- save.jsp에서는 모두 공백 칸이기 때문에 reset이 동작하면 모두 빈칸으로 만들어주고,
+- detail.jsp에서는 title, author, price는 화면 로드 시 value를 부여했기때문에 
+- 수정할 내용을 입력한 후 reset이 동작하면 첫 value 내용들을 보여준다.
+
+2.
+	var regPubDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/
+	if( regPubDate.test($('#pubdate').val()) == false ) {
+		alert('출판일은 YYYY-MM-DD 형식으로 입력해야 합니다.');
+		event.preventDefault();
+	}
+
+- 정규식 표현법 확인
+
+
+	<style>
+	tbody tr:hover {              // tbody의 tr에 마우스를 가져가면
+	cursor: pointer;              // 커서를 포인터로 바꿔주고
+	background-color: bisque;     // 배경색을 bisque 색으로 바꿔준다.
+	}
+	</style>
+	<script>
+
+	$(document).ready(function(){
+		$('tbody tr').on('click', function(){       // 클릭 대상이 행 전체로 작성된 상세보기 이동
+			location.href='${contextPath}/book/detail?book_no=' + $(this).data('book-no');      
+																							     		
+		})
+	})
+
+
+	<tbody>
+		<c:forEach var="book" items="${books}">
+			<tr data-book-no="${book.book_no}">
+				<td>${book.book_no}</td>
+				<td class="book_title" data-book-no="${book.book_no}">${book.title}</td>
+				<td>${book.author}</td>
+				<td>${book.pubdate}</td>
+			</tr>
+		</c:forEach>
+	</tbody>
+	
+4. 
+
+
+
+
+
+
+

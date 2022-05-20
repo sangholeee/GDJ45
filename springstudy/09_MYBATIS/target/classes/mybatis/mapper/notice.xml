@@ -7,6 +7,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="mybatis.mapper.notice">
 
-	
+	<!-- 목록 -->
+	<select id="selectNoticeList" resultType="NoticeDTO">
+		SELECT NOTICE_NO, TITLE, CONTENT, CREATED, LASTMODIFIED
+		  FROM NOTICE
+		 ORDER BY NOTICE_NO DESC
+	</select>
 
 </mapper>

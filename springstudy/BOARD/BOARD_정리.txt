@@ -1,0 +1,11 @@
+1.
+	String ip = request.getRemoteAddr();
+	board.setIp(ip);
+	-> board.setIp(request.getRemoteAddr(); 하면 한 줄로 가능!
+
+2. 날짜 관련 타입이 sql에서 선언이 TIMESTAMP로 되어 있으면 SYSTIMESTAMP로 작성해줘야 한다.
+   BoardDTO에서는 Timestamp(java.sql)로 해주면 된다.
+   
+3. 
+
+

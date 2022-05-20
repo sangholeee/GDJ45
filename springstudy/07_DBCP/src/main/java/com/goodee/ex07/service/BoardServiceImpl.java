@@ -47,7 +47,7 @@ public class BoardServiceImpl implements BoardService {
 			} else {
 				out.println("<script>");
 				out.println("alert('등록되지 않았습니다..')");
-				out.println("history.back()");           // location이동은 redirect와 같은 방식의 이동이다.
+				out.println("history.back()");         												  // location이동은 redirect와 같은 방식의 이동이다.
 				out.println("</script>");
 				out.close();
 			}
@@ -72,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
 			} else {
 				out.println("<script>");
 				out.println("alert('수정되지 않았습니다..')");
-				out.println("history.back()");           // location이동은 redirect와 같은 방식의 이동이다.
+				out.println("history.back()");        												   // location이동은 redirect와 같은 방식의 이동이다.
 				out.println("</script>");
 				out.close();
 			}
@@ -97,7 +97,7 @@ public class BoardServiceImpl implements BoardService {
 			} else {
 				out.println("<script>");
 				out.println("alert('삭제되지 않았습니다..')");
-				out.println("history.back()");           // location이동은 redirect와 같은 방식의 이동이다.
+				out.println("history.back()");      											      // location이동은 redirect와 같은 방식의 이동이다.
 				out.println("</script>");
 				out.close();
 			}

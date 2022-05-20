@@ -16,7 +16,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 // mybatis/properties/db.properties 파일의 내용을 참조하겠습니다.
-@PropertySource(value={"mybatis/properties/db.properties"})
+@PropertySource(value={"classpath:mybatis/properties/db.properties"})
 
 // TransactionManager를 사용하겠습니다.
 @EnableTransactionManagement
@@ -55,7 +55,7 @@ public class DBConfig {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource());   // Hikari DataSource 전달
 		sqlSessionFactoryBean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("mybatis/config/mybatis-config.xml"));
-		sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("mybatis/mapper/notice.xml"));       // 여러 xml 파일을 추가할 때는 *.xml
+		sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("mybatis/mapper/*.xml"));       // 여러 xml 파일을 추가할 때는 *.xml
 		return sqlSessionFactoryBean.getObject();
 	}
 	
@@ -73,26 +73,6 @@ public class DBConfig {
 	public TransactionManager transactionManager() {
 		return new DataSourceTransactionManager(dataSource());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

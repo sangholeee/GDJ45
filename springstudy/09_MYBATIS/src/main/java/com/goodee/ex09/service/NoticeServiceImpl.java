@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.goodee.ex09.domain.NoticeDTO;
+import com.goodee.ex09.repository.NoticeRepository;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -15,8 +16,7 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	@Override
 	public List<NoticeDTO> findNotices() {
-		
-		return null;
+		return noticeRepository.selectNoticeList();
 	}
 
 	@Override

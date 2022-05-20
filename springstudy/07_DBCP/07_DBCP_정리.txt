@@ -1,0 +1,7 @@
+1. Controller 에서 메소드가 반환 타입이 void일 때는 Service의 메소드에서 직접 이동했다는 것을 의미한다.
+   응답을 만드는 response를 메소드에 넘겨주면 메소드에서 직접 이동할 수 있다.
+
+2. location.href == redirect
+
+3. 
+
