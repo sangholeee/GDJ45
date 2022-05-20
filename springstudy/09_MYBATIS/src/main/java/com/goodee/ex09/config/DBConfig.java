@@ -17,7 +17,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 // mybatis/properties/db.properties 파일의 내용을 참조하겠습니다.
 @PropertySource(value={"mybatis/properties/db.properties"})
-
 @EnableTransactionManagement
 @Configuration
 public class DBConfig {
