@@ -3,7 +3,12 @@ package com.goodee.ex08.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@EnableTransactionManagement   // Transaction 동작을 허용합니다.
 
 @Configuration
 public class DBConfig {
@@ -29,4 +34,11 @@ public class DBConfig {
 		return jdbcTemplate;
 	}
 	
+	// Spring JDBC의 Transaction 처리
+	// TransactionManager를 bean으로 등록한다.
+	
+	@Bean
+	public TransactionManager transactionManage() {;
+		return new DataSourceTransactionManager(dataSource());
+	}
 }

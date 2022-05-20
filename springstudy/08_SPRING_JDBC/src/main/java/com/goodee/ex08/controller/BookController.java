@@ -119,5 +119,12 @@ public class BookController {
 		}
 	}
 	
+	// 트랙잭션 테스트용
+	@GetMapping("/book/transaction/test")
+	public String transaction() {
+		bookService.transaction();
+		return "redirect:/book/list";
+	}
+	
 	
 }

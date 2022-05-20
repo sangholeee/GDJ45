@@ -18,7 +18,7 @@
 		 ORDER BY SNO ASC
 	</select>
 
-	<select id="selectStaffByNo" parameterType="String" resultType="domain.StaffDTO">
+	<select id="selectStaffByNo" parameterType="String" resultType="domain.StaffDTO">     <!-- 파라미터타입 생략 가능함! -->
 		SELECT SNO, NAME, DEPT, SALARY
 		  FROM STAFF
 		 WHERE SNO = #{sno}

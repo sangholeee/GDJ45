@@ -39,7 +39,14 @@
 		$('#btnList').on('click', function(){
 			location.href='${contextPath}/book/list'
 		})
-		
+		/*
+		$('#btnReset').on('click', function(){
+			$('#title').val('');
+			$('#author').val('');
+			$('#price').val('');
+			
+		})
+		*/
 	})
 
 </script>
@@ -55,9 +62,8 @@
 		<input type="hidden" name="book_no" value="${book.book_no}">
 		<button>수정</button>
 		<input type="button" value="삭제" id="btnRemove">
-		<input type="reset" value="다시작성">
+		<input type="reset" value="다시작성" id="btnReset">
 		<input type="button" value="목록" id="btnList">
-		
 	</form>
 
 </body>

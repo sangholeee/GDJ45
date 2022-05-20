@@ -11,5 +11,6 @@ public interface BookService {
 	public int save(BookDTO book);
 	public int change(BookDTO book);
 	public int remove(Long book_no);
+	public void transaction();
 	
 }

@@ -22,6 +22,7 @@
 
 9. DispatcherServlet이 응답할 뷰로 이동한다.
 
+
 * annotation 공부해야함.
 1) @Configuration : bean을 만드는 java class 파일. spring bean configuration file과 같은 일을 함.
 
@@ -37,8 +38,6 @@
    - 속성
 	1) value : URLMapping 작성
 	2) method : 요청 메소드 작성(GET, POST)
-
---------03_MVC_DI
 
 6) @Autowired
    - bean의 타입(class)이 일치하는 bean을 찾아서 주입하는 방식(주의. bean의 이름(id)를 찾는 방식이 아님)
@@ -56,7 +55,60 @@
 
 7) @Qualifier(value="board1")    // <qualifier value="board1"/> 이 bean을 주입해 주세요.
    - @Autowired는 class로 bean을 인식하기 때문에 
-     id="board1"과 id="board2"를 다를 bean으로 인식하지 못한다.
+     id="board1"과 id="board2"를 다를 bean으로 인식하지 못한다. 이를 해결
+
+8) @RequestParam(value="name", required=false, defaultValue="아무개")
+   - value="파라미터"       : 전달되는 파라미터 이름이다.
+   - required=false         : 꼭 필요한 파라미터가 아니다. (기본값은 required=true)
+   - defaultValue="기본값"  : 파라미터가 없으면 사용할 값이다.
+   - @RequestParam 애너테이션은 없어도 잘 동작한다.
+
+9) @ModelAttribute(value="member") Member member
+   - 파라미터 name과 age를 Member member에 저장하고,
+   - Model에 member 속성(attribute)으로 저장한다.
+
+10) @GetMapping // @PostMapping
+
+11) @ResponseBody
+    - 반환하는 건 JSP 이름이 아니라 어떤 값(텍스트, XML, JSON 등)
+    - 있으면 Ajax(페이지 안바뀜), 없으면 MVC(페이지 바뀜)
+
+12) @RestController
+    - Ajax 처리를 위한 컨트롤러
+    - 모든 메소드에 @ResponseBody 애너테이션을 자동으로 붙여준다.
+
+13) @Repository   -- 있어도 되고 없어도 된다.
+14) @Service      -- 있어도 되고 없어도 된다.
+
+15) @Data(lombok) : Getter, Setter, ToString을 포함한 애너테이션.
+                  : 생성자 두개는 선언 해줘야 한다.(@NoArgsConstructor, @AllArgsConstructor)
+
+16) @Aspect : 공통 모듈(공통으로 해야 할 일)을 담당하고 있다.
+
+17) @EnableAspectJAutoProxy : Aspect의 동작이 자동으로 진행된다.
+
+18) @EnableTransactionManagement : Transaction 동작을 허용합니다.
+
+19) @Component : bean으로 만들어 준다.
+    - @Component     : 클래스를 bean으로 만들어 준다. 
+    - @Configuration : 메소드를 bean으로 만들어 준다.
+
+20) 실행 시점
+    - @Before : 메소드 호출 전
+    - @After  : 메소드 호출 후 (실행의 성공 여부 상관 없음)
+    - @AfterReturning : 메소드 호출 후 (실행의 성공)
+    - @AfterThrowing  : 메소드 호출 후 (예외 발생)
+    - @Around : 메소드 호출 전후
+	
+21) @Around("execution(* com.goodee.ex08.controller.*Controller.*(..))")
+    - 패키지 com.goodee.ex08.controller 아래에 있는 
+    - Controller로 이름이 끝나는 클래스(*Controller)
+    - 모든 메소드(*(..))에서 실행할 거에요.
+
+
+
+
+
 
 
 

@@ -14,24 +14,20 @@
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
 	
-	<!-- ojdbc6.jar 라이브러리를 다운로드 받을 수 있는 레파지토리 등록 -->
-	<repositories>
-		<repository>
-			<id>oracle</id>
-			<name>Oracle JDBC Resository</name>
-			<url>https://maven.jahia.org/maven2</url>
-		</repository>
-	</repositories>
-	
+		
 	<dependencies>
 	
-		<!-- ojdbc6 -->
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>12.1.0.1</version>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version>
+		    <scope>runtime</scope>
 		</dependency>
+		
 	
+		
+			
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
