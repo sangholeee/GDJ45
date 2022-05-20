@@ -1,0 +1,84 @@
+package com.goodee.ex09.config;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+// mybatis/properties/db.properties 파일의 내용을 참조하겠습니다.
+@PropertySource(value={"mybatis/properties/db.properties"})
+
+@Configuration
+public class DBConfig {
+
+	// mybatis/properties/db.properties 파일에 등록된 프로퍼티 값을 변수에 저장합니다.
+	// 프로퍼티들은 ${}로 처리합니다.
+	@Value(value="${hikariConfig.driverClassName}") private String driverClassName;
+	@Value(value="${hikariConfig.jdbcUrl}") private String jdbcUrl;
+	@Value(value="${hikariConfig.username}") private String username;
+	@Value(value="${hikariConfig.password}") private String password;
+	
+	// HikaryCP 환경 설정
+	@Bean
+	public HikariConfig hikariConfig() {
+		HikariConfig hikariConfig = new HikariConfig();
+		hikariConfig.setDriverClassName(driverClassName);
+		hikariConfig.setJdbcUrl(jdbcUrl);
+		hikariConfig.setUsername(username);
+		hikariConfig.setPassword(password);
+		return hikariConfig;
+	}
+	
+	// HikaryCP DataSource
+	@Bean(destroyMethod="close")
+	public HikariDataSource dataSource() {
+		return new HikariDataSource(hikariConfig());
+	}
+	
+	// SqlSessionFactory
+	@Bean
+	public SqlSessionFactory sqlSessionFactory() throws Exception {
+		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+		sqlSessionFactoryBean.setDataSource(dataSource());   // Hikari DataSource 전달
+		sqlSessionFactoryBean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("mybatis/config/mybatis-config.xml"));
+		sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("mybatis/mapper/notice.xml"));       // 여러 xml 파일을 추가할 때는 *.xml
+		return sqlSessionFactoryBean.getObject();
+	}
+	
+	// SqlSessionTemplate : 지금까지 만든 bean은 모두 이걸 위해서 존재한다.
+	// SqlSessionTemplate은 SqlSession을 의미한다.
+	// 모든 Repository에서 이 bean을 가져다 사용한다.
+	@Bean
+	public SqlSessionTemplate sqlSessionTemplate() throws Exception {
+		return new SqlSessionTemplate(sqlSessionFactory());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
