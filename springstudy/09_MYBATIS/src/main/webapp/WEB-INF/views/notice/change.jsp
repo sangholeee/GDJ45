@@ -12,12 +12,13 @@
 </head>
 <body>
 
-	<form action="${contextPath}/notice/save" method="post">
+	<form action="${contextPath}/notice/change" method="post">
 	
-		<input type="text" name="title" id="title" placeholder="제목" required><br>     
-		<textarea rows="5" cols="30" name="content" id="content"></textarea><br><br>
+		<input type="text" name="title" id="title" value="${notice.title}" required><br>     
+		<textarea rows="5" cols="30" name="content" id="content">${notice.content}</textarea><br><br>
+		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 		
-		<button>등록</button>
+		<button>수정완료</button>
 		
 	</form>
 

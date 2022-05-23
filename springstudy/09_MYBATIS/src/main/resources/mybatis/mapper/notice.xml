@@ -45,4 +45,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	
+	<!-- 수정 -->
+	<update id="updateNotice" parameterType="NoticeDTO">
+		UPDATE NOTICE
+		   SET TITLE = #{title}
+		     , CONTENT = #{content}
+		     , LASTMODIFIED = SYSTIMESTAMP
+		 WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
+	
+	<!-- 삭제 -->
+	<delete id="deleteNotice" parameterType="Long">
+		DELETE
+		  FROM NOTICE
+		 WHERE NOTICE_NO = #{noticeNo}
+	</delete>
+	
+	<!-- 다중 삭제 -->
+	<!-- MYBATIS가 지원하는 동적 쿼리문, SELECT문에서 많이 사용 -->
+	<!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
+	<!-- jsp foreach 문에서 items -> collection, var -> item -->
+	<!-- 수정을 편하게 하기 위해 SET을 작성할 때는 ,를 앞에 WHERE을 작성할 때는 AND를 앞에두고 첫 째줄에 1 = 1 AND 를 작성 -->
+	<delete id="deleteNoticeList" parameterType="List">
+		DELETE
+		  FROM NOTICE
+		 <where>
+		 	<foreach collection="list" item="noticeNo" open="NOTICE_NO IN(" separator="," close=")">
+		 		#{noticeNo}
+		 	</foreach>
+		 </where>
+	</delete>
+	
 </mapper>

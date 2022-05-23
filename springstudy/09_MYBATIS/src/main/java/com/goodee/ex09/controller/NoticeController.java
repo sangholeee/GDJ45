@@ -7,10 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.goodee.ex09.domain.NoticeDTO;
 import com.goodee.ex09.service.NoticeService;
 
 @Controller
@@ -39,10 +37,8 @@ public class NoticeController {
 	public String save(HttpServletRequest request, RedirectAttributes redirectAttributes) {     
 		// 작성자의 IP를 받을 때에는 request를 써야 한다.           
 		// 파라미터 받는 3가지 방법 1. HttpServletRequest request, 2. @RequestParam String title 3. NoticeDTO notice
-		NoticeDTO notice = new NoticeDTO();
-		notice.setTitle(request.getParameter("title"));
-		notice.setContent(request.getParameter("content"));
-		int res = noticeService.save(notice);
+
+		int res = noticeService.save(request);
 		
 		// 성공/실패 메시지 처리가 없는 경우
 		// return "redirect:/notice/list";    // redirect는 매핑으로 이동한다. 목록보기매핑(/notice/list)
@@ -65,15 +61,40 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/notice/detail")
-	public String detail(@RequestParam Long noticeNo, Model model) {
-		model.addAttribute("notice", noticeService.findNoticeByNo(noticeNo));
+	public String detail(HttpServletRequest request, Model model) {
+		model.addAttribute("notice", noticeService.findNoticeByNo(request));
 		return "notice/detail";       // notice 폴더 아래 detail.jsp를 의미한다.
 	}
 	
+	@GetMapping("/notice/changePage")
+	public String changePage(HttpServletRequest request, Model model) {
+		model.addAttribute("notice", noticeService.findNoticeByNo(request));
+		return "notice/change";       // notice 폴더 아래 change.jsp를 의미한다.
+	}
 	
+	@PostMapping("/notice/change")
+	public String change(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("kind", "update");
+		redirectAttributes.addFlashAttribute("res", noticeService.change(request));
+		return "redirect:/notice/afterDML";          // DML(Data Manipulation Language) : insert, delete, update
+	}
 	
+	@GetMapping("/notice/removeOne")
+	public String removeOne(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("kind", "deleteOne");
+		redirectAttributes.addFlashAttribute("res", noticeService.removeOne(request));
+		return "redirect:/notice/afterDML";
+	}
 	
-	
+	@GetMapping("/notice/removeList")
+	public String removeList(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		
+		redirectAttributes.addFlashAttribute("kind", "deleteList");
+		redirectAttributes.addFlashAttribute("res", noticeService.removeList2(request));
+
+		return "redirect:/notice/afterDML";
+		
+	}
 	
 	
 	
