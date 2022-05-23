@@ -21,14 +21,13 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public NoticeDTO findNoticeByNo(Long noticeNo) {
-		
-		return null;
+		noticeRepository.updateHit(noticeNo);					// 조회수를 늘리고,
+		return noticeRepository.selectNoticeByNo(noticeNo);     // 정보를 조회한다.
 	}
 
 	@Override
 	public int save(NoticeDTO notice) {
-		
-		return 0;
+		return noticeRepository.insertNotice(notice);
 	}
 
 	@Override

@@ -13,5 +13,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM NOTICE
 		 ORDER BY NOTICE_NO DESC
 	</select>
+	
+	
+	<!-- 등록 -->
+	<insert id="insertNotice" parameterType="NoticeDTO">    <!-- resultType="int" -> insert의 결과는 0 or 1인거 알고 있으니 적지 않아도 되도록 되어있다. -->
+		<!-- 
+		${noticeNo} : 값이 10일 때 10 
+		#{title} : 값이 공지일 때 '공지'
+		-> 숫자를 넘길 때 NOTICE_NO=TO_NUMBER('1')로 변환되어 넘어가기 때문에 숫자도 #으로 넘긴다. 
+		-->
+		INSERT INTO NOTICE
+			(NOTICE_NO, TITLE, CONTENT, HIT, CREATED, LASTMODIFIED)
+		VALUES
+			(NOTICE_SEQ.NEXTVAL, #{title}, #{content}, 0, SYSTIMESTAMP, SYSTIMESTAMP)
+	</insert>
 
+
+	<!-- 상세보기 -->
+	<select id="selectNoticeByNo" parameterType="Long" resultType="NoticeDTO">        <!-- Spring MYBATIS는 여러 타입을 모두 보낼 수 있다. -->
+		SELECT NOTICE_NO, TITLE, CONTENT, HIT, CREATED, LASTMODIFIED
+		  FROM NOTICE
+		 WHERE NOTICE_NO = #{noticeNo}
+	</select>
+	
+	
+	<!-- 조회수 증가 -->	
+	<update id="updateHit" parameterType="Long">
+		UPDATE NOTICE
+		   SET HIT = HIT + 1
+		 WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
+	
 </mapper>

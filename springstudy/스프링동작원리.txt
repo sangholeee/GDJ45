@@ -105,6 +105,19 @@
     - Controller로 이름이 끝나는 클래스(*Controller)
     - 모든 메소드(*(..))에서 실행할 거에요.
 
+22) @PropertySource(value={"classpath:mybatis/properties/db.properties"})
+    - mybatis/properties/db.properties 파일의 내용을 참조하겠습니다.
+
+23) @Value(value="${hikariConfig.driverClassName}") private String driverClassName;
+    @Value(value="${hikariConfig.jdbcUrl}") private String jdbcUrl;
+    @Value(value="${hikariConfig.username}") private String username;
+    @Value(value="${hikariConfig.password}") private String password;
+    - mybatis/properties/db.properties 파일에 등록된 프로퍼티 값을 변수에 저장합니다.
+    - 프로퍼티들은 ${}로 처리합니다.
+
+24) @Bean(destroyMethod="close") 
+    - HikaryCP Bean으로 만들 때 사용
+
 
 
 
