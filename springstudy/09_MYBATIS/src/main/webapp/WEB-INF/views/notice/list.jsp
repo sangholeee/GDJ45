@@ -17,18 +17,28 @@
 	$(document).ready(function(){
 		
 		swal("안녕하세요", "swal입니다.", "success");
-
+		/*
+		$('tbody td:not(td:first-of-type)').on('click', function(){
+			var noticeNo = $(this).parent().data('notice_no');
+		    location.href='${contextPath}/notice/detail?noticeNo=' + noticeNo;
+		})
+		*/
 		
-		$('tbody tr').on('click', function(){
+		$('tbody tr #clicks').on('click', function(){
 			// $(this)                          : 클릭한 행을 의미한다.
 			//                                    <tr>...</tr>
 			// $(this).find('.noticeNo')        : 클릭한 행 내부에 있는 class="noticeNo" 요소를 의미한다.
 			//                                    <td class="noticeNo">1</td>
 			// $(this).find('.noticeNo').text() : 클릭한 행 내부에 있는 class="noticeNo" 요소의 텍스트를 의미한다.
 			//                                    1
-			var noticeNo = $(this).find('.noticeNo').text();
+			// var noticeNo = $(this).find('.noticeNo').text();
+			var noticeNo = $(this).parent().data('notice_no');         
+			// 함수에서 마지막, 처음 강사님이 풀어주셧을 때는 $('tbody tr') 이었기 때문에 $(this)는 <td>가 된다.
+			// 지금 풀려고 하는게 id를 td에 줬기 때문에 $(this)는 <td>가 된다.
+			// tr에 data를 부여해서 $(this).parent()를 이용해서 값을 불러와야 한다.
 			location.href='${contextPath}/notice/detail?noticeNo=' + noticeNo;
 		})
+		
 		
 		// 전체 선택 클릭하기
 		// 전체 선택을 체크하면 개별 선택도 모두 체크
@@ -68,6 +78,9 @@
 	})
 
 </script>
+<style>
+	.blind { display: none; }
+</style>
 </head>
 <body>
 
@@ -83,7 +96,10 @@
 		<table border="1">
 			<thead>
 				<tr>
-					<td><input type="checkbox" id="checkAll"></td>
+					<td>
+						<label for="checkAll">전체선택</label>
+						<input type="checkbox" id="checkAll" class="blind">
+					</td>
 					<td>번호</td>
 					<td>제목</td>
 					<td>작성일</td>
@@ -91,11 +107,11 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${notices}" var="notice">
-					<tr>
+					<tr data-notice_no="${notice.noticeNo}">
 						<td><input type="checkbox" name="noticeNoList" class="checkes" value="${notice.noticeNo}"></td>
-						<td class="noticeNo">${notice.noticeNo}</td>
-						<td>${notice.title}</td>
-						<td>${notice.created}</td>
+						<td id="clicks" class="noticeNo">${notice.noticeNo}</td>        <!-- td:nth-of-type(2) -->
+						<td id="clicks">${notice.title}</td>							<!-- td:nth-of-type(3) -->
+						<td id="clicks">${notice.created}</td>							<!-- td:nth-of-type(4) -->
 					</tr>
 				</c:forEach>
 			</tbody>
