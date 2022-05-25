@@ -1,0 +1,29 @@
+EMPLOYEES 테이블, DEPARTMENTS 테이블을 사용하기 위해
+HR 계정 활성화(SYSTEM 계정이 할 수 있다.)
+
+ALTER USER HR ACCOUNT UNLOCK;
+ALTER USER HR IDENTIFIED BY 1111;
+
+
+DESC HR.EMPLOYEES;    -> HR 계정의 EMPLOYEES 테이블을 보겠습니다.(DESCRIBE)
+
+Salary, Commission_PCT -> Number(8,2) 전체 8자리 중 소수점 2자리 -> double
+
+새 접속 -> HR계정 생성
+
+SELECT COUNT(*)
+  FROM EMPLOYEES;
+
+
+-- RANK / ROW_NUMBER() / ROWNUM 칼럼 (dbstudy - 7일차3_인라인뷰)
+-- 나중에 입사한 사원을 리스트의 시작에 배치하기
+
+SELECT RANK() OVER(ORDER BY HIRE_DATE DESC) AS 순위, EMPLOYEE_ID, FIRST_NAME, HIRE_DATE
+  FROM EMPLOYEES;
+
+
+-- BEGIN ~ END 사이의 사원만 가져오기
+SELECT A.순위, A.EMPLOYEE_ID, A.FIRST_NAME, A.HIRE_DATE
+  FROM (SELECT RANK() OVER(ORDER BY HIRE_DATE DESC) AS 순위, EMPLOYEE_ID, FIRST_NAME, HIRE_DATE
+          FROM EMPLOYEES) A
+ WHERE A.순위 BETWEEN 6 AND 10;

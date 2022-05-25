@@ -118,6 +118,11 @@
 24) @Bean(destroyMethod="close") 
     - HikaryCP Bean으로 만들 때 사용
 
+25) @Mapper
+    - mybatis/mapper에 있는 .xml 쿼리문이 실행되도록 해준다.
+
+26) @MapperScan(basePackages = {"com.goodee.ex10.mapper"}
+    - @Mapper를 사용하고 있습니다. 여기에서 Mapper를 찾으세요.
 
 
 

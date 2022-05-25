@@ -23,4 +23,7 @@ public class Employee {
 	private Integer managerId;
 	private Integer departmentId;
 	
+	// 필드를 추가해서 DEPARTMENTS JOIN시키기.
+	private String departmentName;
+	
 }

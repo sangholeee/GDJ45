@@ -15,6 +15,9 @@
 	// 페이지 로드 이벤트
 	$(function(){
 		fnAreaChoice();
+		fnSearchAll();
+		fnSearch();
+		fnAutoComplete();
 	})
 	
 	
@@ -37,10 +40,78 @@
 			}
 		})
 		
-		
-		
+	}
+
+	function fnSearchAll(){
+		$('#btnSearchAll').on('click', function(){
+			location.href="${contextPath}/employee/list";
+		})
 	}
 	
+	function fnSearch(){
+		
+		var column = $('#column');
+		var query = $('#query');
+		var begin = $('#begin');
+		var end = $('#end');
+		
+		$('#btnSearch').on('click', function(){
+			// 사원번호 검색
+			var regEmpId = /^[0-9]{3}$/;   // 숫자 3자리여야 함.
+			if(column.val() == 'EMPLOYEE_ID' && regEmpId.test(query.val()) == false) {
+				alert('사원번호가 올바르지 않습니다.');
+				query.focus();
+				return;
+			}
+			
+			// 입사일자 검색
+			var regHireDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;   // 2022-05-25
+			// ! 연산자는 == false와 같은 의미
+			if(column.val() == 'HIRE_DATE' && ( !regHireDate.test(begin.val()) || !regHireDate.test(end.val()) )){
+				alert('입사일자가 올바르지 않습니다.');
+				return;
+			}
+			
+			// 연봉 검색
+			// isNaN(begin.val()) -> is Not a Number (숫자가 아니다.)
+			if(column.val() == 'SALARY' && ( isNaN(begin.val()) || isNaN(end.val()) )) {
+				alert('연봉이 올바르지 않습니다.');
+				return;
+			}
+			
+			// 검색 실행
+			// equalArea 작업은 column, query 파라미터 전송
+			// rangeArea 작업은 column, begin, end 파라미터 전송
+			if( column.val() == 'EMPLOYEE_ID' || column.val() == 'FIRST_NAME') {
+				location.href="${contextPath}/employee/search?column=" + column.val() + "&query=" + query.val();
+			} else {
+				location.href="${contextPath}/employee/search?column=" + column.val() + "&begin=" + begin.val() + "&end=" + end.val();
+			}
+		})
+	}
+	
+	function fnAutoComplete(){
+		// keyup : 한 글자 입력이 끝난 뒤 동작
+		// blur : 다 쓰고 빠져 나갈 때 동작
+		$('#query').on('keyup', function(){
+			$('#autoComplete').empty();
+			$.ajax({    // DB에서 입력한 값으로 시작하는 값을 가져와서 보여 줌
+				url: '${contextPath}/employee/autoComplete',
+				type: 'get',
+				data: 'column=' + $('#column').val() + '&query=' + $('#query').val(),
+				dataType: 'json',
+				success: function(result){
+					if(result.status == 200) {
+						$.each(result.list, function(i, item){
+							$('<option>')
+							.val(item[result.column])           // 객체.속성 -> 불가능   객체['속성'] 가능
+							.appendTo('#autoComplete');         // <option value=''>
+						})
+					}
+				}
+			})
+		})
+	}
 	
 </script>
 </head>
