@@ -1,0 +1,90 @@
+1. 아이디, 비밀번호, 이름 등 user의 정보들은 session에 저장해서 계속 사용할 수 있도록 한다.
+   - session에 저장되어 있는 정보는 browser를 닫아야 사라진다. 
+   - <c:if test="${user != null}">  <!-- user가 null이 아니다. = Session에 정보가 들어있다. = 로그인이 성공했다. -->
+   		<a href="${contextPath}/board/savePage">새글작성</a>
+     </c:if>
+	 -> 로그인을 성공한 경우에만 list.jsp에서 새 글 작성이 가능하도록 하는 명령문
+   - <c:if test="${user.id == board.writer}">
+		<input type="button" value="수정" id="btnChangePage">
+		<input type="button" value="삭제" id="btnRemove">
+	 </c:if>
+	 -> 로그인 되어있는 사용자의 아이디와 게시글의 작성자가 같은 경우에만 
+	    detail.jsp에서 수정과 삭제가 가능하도록 하는 명령문
+   - Session에 올라가있는 정보는 언제든 el 처리해서 호출 가능하다. 
+		${user.id} / ${user.pw} / ${user.name}
+
+2. 목록을 불러올 때
+   model이 없을 때는 List를 반환, controller에서 List를 받는다.
+   model이 있는 경우 model이 모든 전달 내용들을 가지고 가기 때문에 반환 타입을 void로 둔다.
+   전달하는 내용이 많은 경우 model을 사용하면 편하다.
+   
+3. Insert(save) 처리할 때 작성자의 ip를 삽입하는 경우 request가 필요하다.
+
+4. ajax 처리하려면 값을 반환해야 한다.
+   데이터 추가 혹은 제거가 편리하도록 ResponseEntity 혹은 Map을 사용하는 것을 추천!
+
+5. sql문 작성 시 
+   SELECT COUNT(*)와 SELECT COUNT(REPLY_NO)는 같은 의미이다. -> 기본키
+   
+6. 순번을 역순으로 처리하려고 할 때
+   -> ${totalRecord + 1 - board.rn}
+   -> rn을 BoardDTO에 필드로 작성해줘야 한다.
+
+7. BoardFindByNo(상세보기)에서 상세보기 한 게시글 정보("board")를 session에 저장
+   - 상세보기, 수정할 때 꺼내볼 수 있다.
+   - 이미 게시글 정보를 session에 저장했기 때문에 model.addAttribute("board", board); 을 할 필요가 없다.
+   - 수정화면으로 이동, 삭제할 때 
+     location.href='${contextPath}/board/changePage';     // ?boardNo=${board.boardNo}';
+     -> ? 뒷 부분이 필요가 없다.
+   - session에 저장된 "board"에 관한 정보는 "/board/list"가 호출되면 사라지도록 설정해야 한다. 
+	 -> request.getSession().removeAttribute("board");     // board에 관한 session만 초기화 시켜준다.
+	 -> // session.invalidate();                           // Session을 전체 초기화 시켜준다.
+     
+8. redirect 할 때는 model을 못쓴다.	 
+
+9. save/change/remove 관련 Controller에 메소드 작성할 때 반환타입 정하는 법
+   1) 반환타입 void -> Service에서 직접 이동하고 성공, 실패 메시지를 만든다. 
+      - 매개변수 : (HttpServletResponse response) 
+   2) 반환타입 String -> return "redirect:/board/list" -> 메시지 없이 이동
+   3) 반환타입 String -> return "redirect:/board/result" -> result.jsp 에서 성공 실패 메시지를 만든다. 
+      - 매개변수 : (RedirectAttributes redirectAttributes) 여기에 0 or 1을 저장해서 넘김! 
+      - 다음과 같이 result.jsp로 전달하고, if문을 이용해 각각 분류해줘야 오류 없이 작동한다. 
+      -> redirectAttributes.addFlashAttribute("kind", "insert");
+      -> redirectAttributes.addFlashAttribute("kind", "update");
+      -> redirectAttributes.addFlashAttribute("kind", "delete");
+       
+
+10. BoardService에서 change의 매개변수를 BoardDTO board로 잡았기 때문에
+    Controller에서 매개변수를 request로 잡으면 
+    BoardDTO board = BoardDTO.builder()
+				.boardNo(Long.parseLong(request.getParameter("boardNo")))
+				.title(request.getParameter("title"))
+				.content(request.getParameter("content"))
+				.build();
+	builder()를 작성해줘야 한다.
+	-> Controller에서 매개변수를 BoardDTO board로 받으면 전달 내용들이 모두 board로 들어가기 때문에
+	   builder 작성을 따로 할 필요가 없어서 편하다.
+
+11. change.jsp 작성 시 수정하는 내용이 title, content여서 그냥 넘어갈 수 있지만 
+    mapper / board.xml 에서 #{boardNo}가 필요하기 때문에
+    <input type="hidden" name="boardNo" value="${board.boardNo}">
+    잊지말고 꼭 넣어줘야 한다. 
+
+12. PageUtils / getPaging 에서 list 하단의 page 번호, 이전, 다음 등의 링크는
+    font-awesome에 가서 원하는 디자인 찾고, cdn 추가해서 꾸밀 수 있다.
+    getPaging1 참고 // getPaging은 11장과 동일함.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

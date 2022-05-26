@@ -13,7 +13,7 @@
 	.link, .unlink {
 	position: relative;
 	margin: 5px;
-	padding: 5px;
+	padding: 3px;
 	border: 1px solid #fff;
 	font-family: tahoma, helvetica, sans-serif;
 	color: #999;

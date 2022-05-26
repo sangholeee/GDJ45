@@ -20,10 +20,32 @@
 
 7. <div>는 줄이 바뀌고, <span>은 줄이 바뀌지 않는다.
 
-8. 
+8. 프론트엔드 작업할 때 
+   class="link"를 작업하려면 
+   .link { ~~ }
+   <td>를 작업하려면
+   td { ~~~}
+   
+9. $('#equalArea').css('display', 'inline') : 같은 줄에 나타낸다.
+   $('#equalArea').css('display', 'block')  : 줄바꿈 후 나타낸다.
+   $('#equalArea').css('display', 'none')   : 숨김
 
 
+10. 정규식
+    var regHireDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;   // 2022-05-25
+	if(column.val() == 'HIRE_DATE' && ( !regHireDate.test(begin.val()) || !regHireDate.test(end.val()) )){
+		alert('입사일자가 올바르지 않습니다.');
+		return;
+	}
 
+11. isNaN(begin.val()) -> is Not a Number (숫자가 아니다.)
+
+12. ! 연산자는 == false와 같은 의미
+
+13. keyup : 한 글자 입력이 끝난 뒤 동작
+	blur : 다 쓰고 빠져 나갈 때 동작
+
+14. name은 백으로 보낼때 사용, id는 프론트에서 사용
 
 
 

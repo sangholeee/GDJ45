@@ -1,0 +1,63 @@
+ROWNUM 사용
+SELECT B.번호, B.입사순위, B.EMPLOYEE_ID, B.FIRST_NAME, B.HIRE_DATE
+  FROM (SELECT ROWNUM AS 번호 A.입사순위, A.EMPLOYEE_ID, A.FIRST_NAME, A.HIRE_DATE
+          FROM (SELECT RANK() OVER(ORDER BY HIRE_DATE DESC) AS 입사순위, EMPLOYEE_ID, FIRST_NAME, HIRE_DATE
+                  FROM EMPLOYEES) A) B
+ WHERE B.번호 BETWEEN 100 AND 104;
+
+
+-> JOIN 사용.(NULL값 해결 안됨)
+ SELECT A.*
+   FROM (SELECT ROW_NUMBER() OVER(ORDER BY E.HIRE_DATE DESC) AS RN, E.*, D.DEPARTMENT_NAME
+           FROM DEPARTMENTS D, EMPLOYEES E
+          WHERE D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
+  WHERE A.RN BETWEEN 6 AND 10;
+
+
+-- 배정 받은 부서가 없어도 사원테이블에 존재하는 데이터는 모두 조회할 수 있는 OUTER JOIN
+-- 1001  구창민  영업부
+-- 1002  김민서  NULL
+-- 1003  이은영  인사부
+-- 1004  한성일  인사부
+-- 1005  김미나  NULL
+
+-- * 사원테이블에 존재하는 데이터는 모두 조회 : 사원테이블이 왼쪽인지 오른쪽인지 판단
+--   사원테이블이 왼쪽에 있으면   '왼쪽 외부 조인'   : LEFT OUTER JOIN
+--   사원테이블이 오른쪽에 있으면 '오른쪽 외부 조인' : RIGHT OUTER JOIN
+
+-- 1) 조인 문법
+SELECT E.EMP_NO, E.NAME, D.DEPT_NAME
+  FROM DEPARTMENT D RIGHT OUTER JOIN EMPLOYEE E
+    ON D.DEPT_NO = E.DEPART;
+
+-- 2) 콤마 표기법
+SELECT E.EMP_NO, E.NAME, D.DEPT_NAME
+  FROM DEPARTMENT D, EMPLOYEE E
+ WHERE D.DEPT_NO(+) = E.DEPART;  -- 왼쪽 조인은 오른쪽에 (+)표시, 오른쪽 조인은 왼쪽에 (+)표시
+
+-> 콤파 표기법
+ SELECT A.*
+   FROM (SELECT ROW_NUMBER() OVER(ORDER BY E.HIRE_DATE DESC) AS RN, E.*, D.DEPARTMENT_NAME
+           FROM DEPARTMENTS D, EMPLOYEES E
+          WHERE D.DEPARTMENT_ID(+) = E.DEPARTMENT_ID) A
+  WHERE A.RN BETWEEN 6 AND 10;
+
+-> 조인 문법
+ SELECT A.*
+   FROM (SELECT ROW_NUMBER() OVER(ORDER BY E.HIRE_DATE DESC) AS RN, E.*, D.DEPARTMENT_NAME
+           FROM DEPARTMENTS D RIGHT JOIN EMPLOYEES E
+             ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
+  WHERE A.RN BETWEEN 6 AND 10;
+
+
+이름 검색 시
+
+String query = "%" + request.getParameter("query") + "%";
+
+WHERE FIRST_NAME LIKE #{query};
+
+
+WHERE ${column} LIKE '%' || #{query} || '%';
+
+
+
