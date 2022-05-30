@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.goodee.ex12.domain.BoardDTO;
-import com.goodee.ex12.domain.ReplyDTO;
 import com.goodee.ex12.mapper.BoardMapper;
 import com.goodee.ex12.util.PageUtils;
 
@@ -57,6 +56,7 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 	
+	// Model에 싣는다 -> MVC 하겠다.
 	@Override
 	public void findBoardByNo(HttpServletRequest request, HttpServletResponse response, Model model) {
 		
@@ -74,18 +74,11 @@ public class BoardServiceImpl implements BoardService {
 		// 게시글 가져 옴(원글)
 		BoardDTO board = boardMapper.selectBoardByNo(boardNo);
 		
-		// 게시글이 존재하면, 댓글을 가져와야 한다.
+		// 게시글이 존재하면
 		if(board != null) {
 			
 			// 게시글을 session에 두기(상세보기, 수정할 때 꺼내 보려고)
 			request.getSession().setAttribute("board", board);
-			
-			// 댓글 목록 가져오기
-			List<ReplyDTO> replies = null;
-			
-			// detail.jsp로 보낼 정보
-			// model.addAttribute("board", board); -> 게시글 정보를 session에 올리면 필요가 없어진다.
-			model.addAttribute("replies", replies);
 			
 		} else {
 			try {

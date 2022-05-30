@@ -206,3 +206,6 @@
 5월 06, 2022 09:24:19.768 [5552:6104:0506/092419.768:ERROR:CONSOLE(1)] "Request Overlay.highlightNode failed. {"code":-32600,"message":"The node's document is not active"}", source: devtools://devtools/bundled/devtools-frontend/front_end/core/protocol_client/protocol_client.js (1)
 5월 06, 2022 09:24:19.956 [5552:6104:0506/092419.955:ERROR:CONSOLE(1)] "Request Overlay.highlightNode failed. {"code":-32600,"message":"The node's document is not active"}", source: devtools://devtools/bundled/devtools-frontend/front_end/core/protocol_client/protocol_client.js (1)
 5월 06, 2022 09:24:20.35 [5552:6104:0506/092420.034:ERROR:CONSOLE(1)] "Request Overlay.highlightNode failed. {"code":-32600,"message":"The node's document is not active"}", source: devtools://devtools/bundled/devtools-frontend/front_end/core/protocol_client/protocol_client.js (1)
+
+5월 27, 2022 09:04:02.534 NEW SESSION
+5월 27, 2022 09:04:02.534 [7220:7264:0527/090402.533:ERROR:device_event_log_impl.cc(214)] [09:04:02.533] Bluetooth: bluetooth_adapter_winrt.cc:1075 Getting Default Adapter failed.

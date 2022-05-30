@@ -50,6 +50,7 @@
 	
 	<c:if test="${user != null}">  <!-- user가 null이 아니다. = Session에 정보가 들어있다. = 로그인이 성공했다. -->
 		<a href="${contextPath}/board/savePage">새글작성</a>
+		<a href="${contextPath}/board/index">로그아웃</a>
 	</c:if>
 	<c:if test="${user == null}">
 		<a href="${contextPath}/board/index">로그인페이지로 이동</a>

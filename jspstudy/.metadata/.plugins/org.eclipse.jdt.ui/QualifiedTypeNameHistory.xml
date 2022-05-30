@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.io.BufferedOutputStream"/>
     <fullyQualifiedTypeName name="service.FreeService"/>
     <fullyQualifiedTypeName name="domain.Free"/>
     <fullyQualifiedTypeName name="repository.FreeDAO"/>
@@ -60,4 +59,5 @@
     <fullyQualifiedTypeName name="java.lang.Object"/>
     <fullyQualifiedTypeName name="domain.StaffDTO"/>
     <fullyQualifiedTypeName name="repository.StaffDAO"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
 </qualifiedTypeNameHistroy>

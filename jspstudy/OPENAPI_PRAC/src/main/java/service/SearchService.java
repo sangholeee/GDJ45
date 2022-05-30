@@ -27,6 +27,7 @@ public class SearchService {
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		
+		
 		// 요청 Parameter
 		String query = request.getParameter("query");
 		String display = request.getParameter("display");

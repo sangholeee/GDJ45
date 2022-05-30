@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 댓글 삽입 -->
 	<insert id="insertReply" parameterType="ReplyDTO">
-		INSERT INTO
+		INSERT INTO REPLY
 			(REPLY_NO, WRITER, CONTENT, IP, BOARD_NO, CREATED)
 		VALUES
 			(REPLY_SEQ.NEXTVAL, #{writer}, #{content}, #{ip}, #{boardNo}, SYSDATE)

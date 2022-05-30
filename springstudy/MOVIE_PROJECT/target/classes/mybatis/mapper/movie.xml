@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.goodee.movie.mapper.MovieMapper">
+
+	
+	<!-- 목록 -->
+	<select id="selectMovieList" resultType="MovieDTO">
+		SELECT NO, TITLE, GENRE, DESCRIPTION, STAR
+		  FROM MOVIE
+		 ORDER BY NO ASC
+	</select>
+	
+	<!-- 전체 영화 갯수 -->
+	<select id="selectMovieCount" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM MOVIE
+	</select>
+	
+	
+	<!-- 검색 -->
+	<select id="selectMovieBySearch" parameterType="Map" resultType="MovieDTO">
+		SELECT NO, TITLE, GENRE, DESCRIPTION, STAR
+		  FROM MOVIE
+		 <where>
+			 <choose>
+			 	<when test="column == 'TITLE'">${column} = TRIM(#{searchText})</when>
+			 	<when test="column == 'GENRE'">${column} = TRIM(#{searchText})</when>
+			 	<when test="column == 'DESCRIPTION'">${column} LIKE '%' || #{searchText} || '%'</when>
+			 </choose>
+		</where>
+	</select>
+	
+
+	
+</mapper>

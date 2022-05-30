@@ -32,10 +32,106 @@
 			location.href='${contextPath}/board/list';
 		})
 		
+		// 댓글 갯수 + 리스트
+		fnReplies();
 		
-	})
+		// 댓글 등록
+		fnReplySave();
+		
+		// 댓글 삭제
+		fnReplyRemove();
+		
+		// 댓글 입력창 초기화
+		fnInit();
+		
+	}) // 페이지 로드 이벤트
+	
+	// 함수
+	function fnReplies(){
+		
+		$.ajax({
+			/* 요청 */
+			url: '${contextPath}/reply/list',
+			type: 'get',
+			data: 'boardNo=${board.boardNo}',
+			
+			/* 응답 */
+			dataType: 'json',
+			success: function(obj){   // obj = {"replyCount": 갯수, "replies": [{댓글정보}, {댓글정보} ,,, ]}
+				$('#replies').empty();
+				$('#replyCount').text(obj.replyCount);
+				$.each(obj.replies, function(i, reply) {
+					var tr = $('<tr>')
+					.append($('<td>').text(reply.writer))
+					.append($('<td>').text(reply.content))
+					.append($('<td>').text(reply.ip))
+					.append($('<td>').text(reply.created));
+					if(reply.writer == '${user.id}') {
+						$(tr).append($('<td>').html('<span class="removeLink" data-reply_no="' + reply.replyNo + '">x</span>'));
+					}
+					$(tr).appendTo('#replies');
+				})
+			}
+			
+		})  
+	}
+	
+	
+	function fnReplySave(){
+		$('#btnReplySave').on('click', function(){
+			$.ajax({
+				/* 요청 */
+				url: '${contextPath}/reply/save',
+				type: 'post',
+				data: $('#f').serialize(),
+				
+				/* 응답 */
+				dataType: 'json',
+				success: function(obj) {
+					if(obj.res > 0) {
+						alert('댓글이 등록되었습니다.');
+						fnReplies();
+						fnInit();
+					}
+				}
+			})
+		})
+	}
+	
+	// script에서 새로 만든 동적 요소이기 때문에 $('.removeLink') 이렇게 할 수 없다.
+	// 저게 가능한건 body에서 만든 정적요소 일 때 가능
+	function fnReplyRemove(){
+		$('body').on('click', '.removeLink', function(){
+			if(confirm('삭제할까요?')){
+				$.ajax({
+					/* 요청 */
+					url: '${contextPath}/reply/remove',
+					type: 'get',
+					data: 'replyNo=' + $(this).data('reply_no'),
+					
+					/* 응답 */
+					dataType: 'json',
+					success: function(obj) {
+						if(obj.res > 0) {
+							alert('댓글이 삭제되었습니다.');
+							fnReplies();
+						}
+					}
+				})
+			}
+		})
+	}
+	
+	function fnInit(){
+		$('#content').val('');
+	}
 
 </script>
+<style>
+	.removeLink {
+		cursor: pointer;
+	}
+</style>
 </head>
 <body>
 
@@ -60,13 +156,23 @@
 	
 	<hr>
 	
-	댓글 몇 개
+	<div>
+		댓글 <span id="replyCount"></span>개
+	</div>
 	
-	<textarea rows="3" cols="30" name="content" id="content"></textarea><br><br>
-	
+	<!-- form을 사용해 serialize 할 때는 name으로 보내는 것! -->
+	<form id="f">
+		<input type="hidden" name="writer" value="${user.id}">
+		<input type="hidden" name="boardNo" value="${board.boardNo}">
+		<textarea rows="3" cols="30" name="content" id="content"></textarea>
+		<c:if test="${user != null}">
+			<input type="button" value="작성완료" id="btnReplySave">
+		</c:if>
+		<br><br>
+	</form>
 	댓글 리스트<br>
 	<table>
-		<tbody>
+		<tbody id="replies">
 			
 		</tbody>
 	</table>
