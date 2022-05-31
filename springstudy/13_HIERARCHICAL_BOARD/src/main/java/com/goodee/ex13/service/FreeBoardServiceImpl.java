@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.goodee.ex13.domain.FreeBoardDTO;
@@ -52,19 +53,72 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public int saveFreeBoard(HttpServletRequest request) {
 		
-		return 0;
+		// 게시글 작성자, 내용
+		String writer = request.getParameter("writer");
+		String content = request.getParameter("content");
+		
+		// 작성 ip
+		Optional<String> opt = Optional.ofNullable(request.getHeader("X-Forwarded-For"));
+		String ip = opt.orElse(request.getRemoteAddr());
+		
+		// 삽입할 댓글 DTO
+		FreeBoardDTO freeBoard = new FreeBoardDTO();
+		freeBoard.setWriter(writer);
+		freeBoard.setContent(content);
+		freeBoard.setIp(ip);
+		
+		return freeBoardMapper.insertFreeBoard(freeBoard);
 	}
 
+	@Transactional    // saveReply 메소드 내부에서 update + insert 호출하고 있으므로
 	@Override
 	public int saveReply(HttpServletRequest request) {
 		
-		return 0;
+		// 댓글 작성자와 댓글 내용
+		String writer = request.getParameter("writer");
+		String content = request.getParameter("content");
+		
+		// 원글의 depth, groupNo, groupOrd
+		Integer depth = Integer.parseInt(request.getParameter("depth"));
+		Long groupNo = Long.parseLong(request.getParameter("groupNo"));
+		Integer groupOrd = Integer.parseInt(request.getParameter("groupOrd"));
+		
+		// 작성 ip
+		Optional<String> opt = Optional.ofNullable(request.getHeader("X-Forwarded-For"));
+		String ip = opt.orElse(request.getRemoteAddr());
+		
+		// 원글의 depth, groupNo, groupOrd를 이용해서 댓글의 depth, groupNo, groupOrd를 계산
+		// 댓글 depth : 원글 depth + 1
+		// 댓글의 groupNo : 원글의 groupNo
+		// 댓글의 groupOrd : 같은 그룹의 기존 댓글 모두 groupOrd + 1 처리 후 원글 groupNo + 1
+		
+		// 같은 그룹의 기존 댓글 모두 groupOrd + 1 처리를 위해서는
+		// FreeBoardMapper에 원글의 정보를 넘겨야 한다.
+		
+		// 원글 DTO
+		FreeBoardDTO freeBoard = new FreeBoardDTO();
+		freeBoard.setGroupNo(groupNo);
+		freeBoard.setGroupOrd(groupOrd);
+		
+		freeBoardMapper.updatePreviousReply(freeBoard);
+		
+		// 삽입할 댓글 DTO
+		FreeBoardDTO reply = new FreeBoardDTO();
+		reply.setWriter(writer);
+		reply.setContent(content);
+		reply.setDepth(depth + 1);
+		reply.setGroupNo(groupNo);
+		reply.setGroupOrd(groupOrd + 1);
+		reply.setIp(ip);
+		
+		return freeBoardMapper.insertReply(reply);
+		
 	}
 
 	@Override
 	public int removeFreeBoard(Long freeBoardNo) {
 		
-		return 0;
+		return freeBoardMapper.deleteFreeBoard(freeBoardNo);
 	}
 
 }

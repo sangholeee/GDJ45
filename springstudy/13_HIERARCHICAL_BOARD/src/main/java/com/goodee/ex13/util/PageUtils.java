@@ -97,7 +97,7 @@ public class PageUtils {
 			if(page == 1) {
 				sb.append("<span class=\"unlink\">prev</span>");
 			} else {
-				sb.append("<a class=\"link\" href=\"" + path + "page=" + (page - 1) + "\">prev</a>");
+				sb.append("<a class=\"link\" href=\"" + path + "page=" + (page - 1) + "\"><i class=\"fa-solid fa-caret-left\"></i></a>");
 			}
 		
 		// 페이지 번호 (1 2 3 4 5), 현재 페이지는 <a> 태그가 없다.
@@ -113,7 +113,7 @@ public class PageUtils {
 			if(page == totalPage) {
 				sb.append("<span class=\"unlink\">next</span>");
 			} else {
-				sb.append("<a class=\"link\" href=\"" + path + "page=" + (page + 1) + "\">next</a>");
+				sb.append("<a class=\"link\" href=\"" + path + "page=" + (page + 1) + "\"><i class=\"fa-solid fa-caret-right\"></i></a>");
 			}
 		
 		// 다음 블록으로 이동, 마지막 블록에는 <a> 태그가 없다.
