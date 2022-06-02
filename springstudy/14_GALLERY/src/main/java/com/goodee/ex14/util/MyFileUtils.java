@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.UUID;
 import java.util.regex.Matcher;
 
-public class FileUtils {
+public class MyFileUtils {
 
 	// 파일명을 UUID로 변환
 	public static String getUuid(String filename) {

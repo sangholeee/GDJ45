@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-@ComponentScan(basePackages = {"com.goodee.ex12.batch"})    // Component를 basePackages에서 찾으렴
+@ComponentScan(basePackages = {"com.goodee.ex14.batch"})    // Component를 basePackages에서 찾으렴
 @EnableScheduling                                           // Scheduling을 허용한다
 
-@MapperScan(basePackages = {"com.goodee.ex12.mapper"})
+@MapperScan(basePackages = {"com.goodee.ex14.mapper"})
 @PropertySource(value={"classpath:mybatis/properties/db.properties"})
 @EnableTransactionManagement
 @Configuration
