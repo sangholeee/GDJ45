@@ -69,6 +69,13 @@ public class GalleryServiceImpl implements GalleryService {
 		return null;
 		
 	}
+	
+	@Override
+	public FileAttachDTO findFileAttachByNo(Long fileAttachNo) {
+		
+		return galleryMapper.selectFileAttachByNo(fileAttachNo);
+	}
+	
 
 	@Transactional
 	@Override
@@ -136,7 +143,7 @@ public class GalleryServiceImpl implements GalleryService {
 					File file = new File(dir, saved);
 					
 					// 첨부파일 확인
-					String contentType = Files.probeContentType(file.toPath());    // 이미지의 Content-Type(image/jpg, image/png, image/gif)
+					String contentType = Files.probeContentType(file.toPath());    // 이미지의 Content-Type(image/jpeg, image/png, image/gif)
 					if(contentType.startsWith("image")) {
 						
 						// 첨부파일 서버에 저장(업로드)

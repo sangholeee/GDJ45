@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.goodee.ex14.domain.FileAttachDTO;
 import com.goodee.ex14.domain.GalleryDTO;
 
 public interface GalleryService {
 
 	public void findGalleries(HttpServletRequest request, Model model);
+	public FileAttachDTO findFileAttachByNo(Long fileAttachNo);
 	public GalleryDTO findGalleryByNo(Long galleryNo);
 	// 파일첨부는 httpservletRequest 못 쓴다.
 	public void save(MultipartHttpServletRequest multipartRequest, HttpServletResponse response);
