@@ -70,12 +70,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 갤러리 목록 -->
 	<!-- INNER JOIN 기본키를 갖고 있는 테이블이 앞 -->
-	<select id="selectGalleryList" parameterType="Map" resultMap="FileAttachMap">
-		SELECT A.GALLERY_NO, A.WRITER, A.TITLE, A.CONTENT, A.IP, A.HIT, A.CREATED, A.MODIFIED, A.FILE_ATTACH_NO, A.PATH, A.ORIGIN, A.SAVED, A.DOWNLOAD_CNT
-		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY G.GALLERY_NO DESC) AS ROW_NUM, G.GALLERY_NO, G.WRITER, G.TITLE, G.CONTENT, G.IP, G.HIT, G.CREATED, G.MODIFIED, F.FILE_ATTACH_NO, F.PATH, F.ORIGIN, F.SAVED, F.DOWNLOAD_CNT
-		  		  FROM GALLERY G INNER JOIN FILE_ATTACH F 
-		    			ON G.GALLERY_NO = F.GALLERY_NO) A
-		 WHERE A.ROW_NUM BETWEEN #{beginRecord} AND #{endRecord}
+	<select id="selectGalleryList" parameterType="Map" resultType="GalleryDTO">
+	  SELECT A.GALLERY_NO, A.WRITER, A.TITLE, A.CONTENT, A.IP, A.HIT, A.CREATED, A.MODIFIED
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY GALLERY_NO DESC) AS ROW_NUM, GALLERY_NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, MODIFIED
+		        FROM GALLERY) A
+	   WHERE A.ROW_NUM BETWEEN #{beginRecord} AND #{endRecord}
 	</select>
 	
 	<!-- 첨부파일 반환 -->
@@ -96,7 +95,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(GALLERY_SEQ.NEXTVAL, #{writer}, #{title}, #{content}, #{path}, #{origin}, #{saved}, #{ip}, 0, SYSDATE, SYSDATE)
 	</insert>
 	 -->
-	
 	 
+	 <!-- 다운로드 횟수 증가 -->
+	<update id="updateDownloadCnt" parameterType="Long">
+		UPDATE FILE_ATTACH
+		   SET DOWNLOAD_CNT = DOWNLOAD_CNT + 1
+		 WHERE FILE_ATTACH_NO = #{fileAttachNo}
+	</update>
+	
+	<!-- 갤러리 상세보기 -->
+	<select id="selectGalleryByNo" parameterType="Long" resultType="GalleryDTO">
+		SELECT GALLERY_NO, WRITER, TITLE, CONTENT, IP, HIT, CREATED, MODIFIED
+		  FROM GALLERY
+		 WHERE GALLERY_NO = #{galleryNo}
+	</select>
+	
+	<!-- 갤러리에 첨부된 첨부 파일 목록 -->
+	<select id="selectFileAttachListInTheGallery" parameterType="Long" resultType="FileAttachDTO">
+		SELECT FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT
+		  FROM FILE_ATTACH
+		 WHERE GALLERY_NO = #{galleryNo}
+	</select>
+	
+	<!-- 갤러리 조회수 증가 -->
+	<update id="updateGalleryHit" parameterType="Long">
+		UPDATE GALLERY
+		   SET HIT = HIT + 1
+		 WHERE GALLERY_NO = #{galleryNo}
+	</update>
+	
 	 
 </mapper>
