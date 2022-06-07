@@ -120,6 +120,7 @@ $ git config user.name sangho8570            ## git 사용자 이름을 등록�
 ## 등록할 이름은 알아서 정한다.
 ## git confi user.name 현재 로컬저장소만 사용자 등록하기
 ## git config--global user.name 사용자 이름 : 현재 PC의 git 사용자 등록하기(개인 노트북, 개인개발PC는 --global 옵션을 사용.)
+     -> 이걸로 사용!!
 
 GDJ45@DESKTOP-1HU0Q6R MINGW64 ~/local (main)
 $ git config user.email          ## git 사용자의 이메일 확인하기
@@ -359,6 +360,45 @@ To https://github.com/sangholeee/local.git
 4. 원격저장소 등록
 5. pull
 6. push
+
+
+--------------------------------------
+
+디렉터리를 C로 두고,
+GDJ45@DESKTOP-1HU0Q6R MINGW64 /c
+$ git clone https://github.com/goodeeit/HelloProject.git(원격지 주소)
+-> C에 해당 프로젝트가 생긴다.
+Cloning into 'HelloProject'...
+remote: Enumerating objects: 79, done.
+remote: Counting objects: 100% (79/79), done.
+remote: Compressing objects: 100% (43/43), done.
+remote: Total 79 (delta 4), reused 76 (delta 4), pack-reused 0
+Receiving objects: 100% (79/79), 96.06 KiB | 6.00 MiB/s, done.
+Resolving deltas: 100% (4/4), done.
+
+GDJ45@DESKTOP-1HU0Q6R MINGW64 /c
+$ cd HelloProject
+
+GDJ45@DESKTOP-1HU0Q6R MINGW64 /c/HelloProject (main)
+$ git remote remove origin
+
+GDJ45@DESKTOP-1HU0Q6R MINGW64 /c/HelloProject (main)
+$ git remote add origin https://github.com/sangholeee/HelloProject.git
+
+GDJ45@DESKTOP-1HU0Q6R MINGW64 /c/HelloProject (main)
+$ git push -f origin main
+Enumerating objects: 79, done.
+Counting objects: 100% (79/79), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (43/43), done.
+Writing objects: 100% (79/79), 96.06 KiB | 48.03 MiB/s, done.
+Total 79 (delta 4), reused 79 (delta 4), pack-reused 0
+remote: Resolving deltas: 100% (4/4), done.
+To https://github.com/sangholeee/HelloProject.git
+ + 0b8c0ce...de0403a main -> main (forced update)
+
+
+
 
 
 

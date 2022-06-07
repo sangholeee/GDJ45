@@ -8,28 +8,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 
 		FileAttachDTO에 GalleryDTO를 넣은 resultMap 처리 (조인에서 활용)
+		여기서 안씀. 사용법만 기억.
+		<resultMap type="GalleryDTO" id="GalleryMap">
+			<result column="GALLERY_NO" property="galleryNo"/>
+			<result column="WRITER" property="writer"/>
+			<result column="TITLE" property="title"/>
+			<result column="CONTENT" property="content"/>
+			<result column="IP" property="ip"/>
+			<result column="HIT" property="hit"/>
+			<result column="CREATED" property="created"/>
+			<result column="MODIFIED" property="modified"/>
+		</resultMap>
+		<resultMap type="FileAttachDTO" id="FileAttachMap">
+			<result column="FILE_ATTACH_NO" property="fileAttachNo"/>
+			<result column="PATH" property="path"/>
+			<result column="ORIGIN" property="origin"/>
+			<result column="SAVED" property="saved"/>
+			<result column="DOWNLOAD_CNT" property="downloadCnt"/>
+			<collection resultMap="GalleryMap" property="gallery"></collection>
+		</resultMap>
 	 -->	
-	<resultMap type="GalleryDTO" id="GalleryMap">
-		<result column="GALLERY_NO" property="galleryNo"/>
-		<result column="WRITER" property="writer"/>
-		<result column="TITLE" property="title"/>
-		<result column="CONTENT" property="content"/>
-		<result column="IP" property="ip"/>
-		<result column="HIT" property="hit"/>
-		<result column="CREATED" property="created"/>
-		<result column="MODIFIED" property="modified"/>
-	</resultMap>
-	<resultMap type="FileAttachDTO" id="FileAttachMap">
-		<result column="FILE_ATTACH_NO" property="fileAttachNo"/>
-		<result column="PATH" property="path"/>
-		<result column="ORIGIN" property="origin"/>
-		<result column="SAVED" property="saved"/>
-		<result column="DOWNLOAD_CNT" property="downloadCnt"/>
-		<collection resultMap="GalleryMap" property="gallery"></collection>
-	</resultMap>
 	
-
-
 	<!-- 갤러리 추가 -->
 	<!-- 
 		selectKey : GALLERY_SEQ.NEXTVAL 값을 INSERT문 실행 전에 GalleryDTO의 galleryNo에 넣어둔다.
@@ -52,15 +51,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 파일 첨부 추가 -->
-	
 	<insert id="insertFileAttach" parameterType="FileAttachDTO">
 		INSERT INTO FILE_ATTACH
-			(FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT, GALLERY_NO)
+			(FILE_ATTACH_NO, PATH, ORIGIN, SAVED, GALLERY_NO, DOWNLOAD_CNT)
 		VALUES
-			(FILE_ATTACH_SEQ.NEXTVAL, #{path}, #{origin}, #{saved}, 0, #{gallery.galleryNo})
+			(FILE_ATTACH_SEQ.NEXTVAL, #{path}, #{origin}, #{saved}, #{galleryNo}, 0)
 	</insert>
 	
-
 	
 	<!-- 전체 갤러리 갯수 -->
 	<select id="selectGalleryCount" resultType="Integer">
@@ -79,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 첨부파일 반환 -->
 	<select id="selectFileAttachByNo" parameterType="Long" resultType="FileAttachDTO">
-		SELECT FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT
+		SELECT FILE_ATTACH_NO, PATH, ORIGIN, SAVED, GALLERY_NO, DOWNLOAD_CNT
 		  FROM FILE_ATTACH
 		 WHERE FILE_ATTACH_NO = #{fileAttachNo}
 	</select>
@@ -112,7 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 갤러리에 첨부된 첨부 파일 목록 -->
 	<select id="selectFileAttachListInTheGallery" parameterType="Long" resultType="FileAttachDTO">
-		SELECT FILE_ATTACH_NO, PATH, ORIGIN, SAVED, DOWNLOAD_CNT
+		SELECT FILE_ATTACH_NO, PATH, ORIGIN, SAVED, GALLERY_NO, DOWNLOAD_CNT
 		  FROM FILE_ATTACH
 		 WHERE GALLERY_NO = #{galleryNo}
 	</select>
@@ -124,5 +121,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE GALLERY_NO = #{galleryNo}
 	</update>
 	
-	 
+	<!-- 갤러리 삭제 -->
+	<!-- Gallery 테이블의 Row가 삭제되면, File_Attach 테이블의 Row도 함께 삭제됨. -->
+	<delete id="deleteGallery" parameterType="Long">
+		DELETE
+		  FROM GALLERY
+		 WHERE GALLERY_NO = #{galleryNo}
+	</delete>
+	
+	<!-- 갤러리 수정 -->
+	<update id="updateGallery" parameterType="GalleryDTO">
+		UPDATE GALLERY
+		   SET TITLE = #{title}, CONTENT = #{content}, MODIFIED = SYSDATE
+		 WHERE GALLERY_NO = #{galleryNo}
+	</update>
+	
+	<!-- 첨부 파일 삭제 -->
+	<delete id="deleteFileAttach" parameterType="Long">
+		DELETE
+		  FROM FILE_ATTACH
+		 WHERE FILE_ATTACH_NO = #{fileAttachNo}
+	</delete>
+	
+	<!-- 어제 저장된 첨부 파일 목록 -->
+	<select id="selectFileAttachListAtYesterday" resultType="FileAttachDTO">
+			SELECT FILE_ATTACH_NO, PATH, ORIGIN, SAVED, GALLERY_NO, DOWNLOAD_CNT
+		  FROM FILE_ATTACH
+		 WHERE PATH = 'C:\\upload\\' || TO_CHAR(SYSDATE - 1, 'yyyy\\mm\\dd')
+	</select>
 </mapper>

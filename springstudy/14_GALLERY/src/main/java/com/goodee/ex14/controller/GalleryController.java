@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,9 +71,40 @@ public class GalleryController {
 		return galleryService.download(userAgent, fileAttachNo);
 	}
 	
+	@GetMapping("/gallery/remove")
+	public void remove(HttpServletRequest request, HttpServletResponse response) {
+		galleryService.removeGallery(request, response);
+	}
 	
+	@GetMapping("/gallery/changePage")
+	public String changePage(HttpServletRequest request, Model model) {
+		galleryService.findGalleryByNo(request, model);
+		return "gallery/change";
+		
+	}
+
+	/* 동일한 코드
+	@GetMapping("/gallery/changePage")
+	public String changePage(@RequestParam Long galleryNo, Model model) {
+		model.addAttribute("galleryNo", galleryNo);
+		return "gallery/change";
+	}
+	@GetMapping("/gallery/changePage")
+	public String changePage(@ModelAttribute("galleryNo") Long galleryNo) {
+		return "gallery/change";
+	}
+	*/
 	
+	@PostMapping("/gallery/change")
+	public void change(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+		galleryService.change(multipartRequest, response);
+	}
 	
+	@GetMapping("/gallery/removeFileAttach")
+	public String removeFileAttach(@RequestParam Long fileAttachNo, @RequestParam Long galleryNo) {
+		galleryService.removeFileAttach(fileAttachNo);
+		return "redirect:/gallery/detail?galleryNo=" + galleryNo;  // 응답을 만들지 않은 삭제이기 때문에 redirect 사용
+	}
 	
 	
 }
