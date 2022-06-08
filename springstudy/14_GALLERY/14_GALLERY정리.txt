@@ -1,0 +1,32 @@
+1. multipartResolver.setMaxUploadSizePerFile(1024 * 1024 * 10) 
+   -> 파일 하나당 최대 10MB, 생략하면 -1 사용, 제한 없다는 뜻
+   multipartResolver.setMaxUploadSize(1024 * 1024 * 50)
+   -> 전체 최대 50MB
+
+2. 파일첨부 시 enctype="multipart/form-data" -> httpservletRequest 못 쓴다, MultipartHttpServletRequest 사용해야 함.
+
+3. 파일 첨부, 다운로드
+
+4. 파일 업로드 시 확장자 구분
+
+5. 그날 그날의 경로 만들기 -> MyFIleUtils.java
+
+6.  Gallery 테이블의 Row가 삭제되면, File_Attach 테이블의 Row도 함께 삭제됨.
+    -> 이건 처음 sql 외래키 지정 시
+    ALTER TABLE FILE_ATTACH
+    ADD CONSTRAINT FILE_ATTACH_GALLERY_FK FOREIGN KEY(GALLERY_NO)
+        REFERENCES GALLERY(GALLERY_NO)
+            ON DELETE CASCADE;     -> 이 부분!
+
+
+
+
+
+
+
+
+
+
+
+
+

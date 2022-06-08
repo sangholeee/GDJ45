@@ -363,6 +363,7 @@ To https://github.com/sangholeee/local.git
 
 
 --------------------------------------
+Clone 사용법
 
 디렉터리를 C로 두고,
 GDJ45@DESKTOP-1HU0Q6R MINGW64 /c

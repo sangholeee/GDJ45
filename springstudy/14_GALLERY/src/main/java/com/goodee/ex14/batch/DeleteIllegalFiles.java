@@ -21,7 +21,7 @@ public class DeleteIllegalFiles {
 	private GalleryMapper galleryMapper;
 	
 	// 매일 새벽 3시에 어제 첨부된 파일 중 잘못된 파일들을 찾아서 제거한다.
-	@Scheduled(cron = "0 0/1 * * * *")  // 새벽 3시 동작("0 0 3 * * *"), 1분마다("0 0/1 * * * *")
+	@Scheduled(cron = "0 0 3 * * *")  // 새벽 3시 동작("0 0 3 * * *"), 1분마다("0 0/1 * * * *")
 	public void execute() throws Exception {
 		
 		// 어제 경로를 알아내기
