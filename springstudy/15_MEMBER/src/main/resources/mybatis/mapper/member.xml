@@ -19,5 +19,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE EMAIL = #{email}
 	</select>
 	
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="MemberDTO">
+		INSERT INTO MEMBER
+			(MEMBER_NO, ID, PW, NAME, EMAIL, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED)
+		VALUES
+			(MEMBER_SEQ.NEXTVAL, #{id}, #{pw}, #{name}, #{email}, #{agreeState}, SYSDATE, SYSDATE, SYSDATE)
+	</insert>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="deleteMember" parameterType="Long">
+		DELETE
+		  FROM MEMBER
+		 WHERE MEMBER_NO = #{memberNo}
+	</delete>
+	
+	<!--  -->
+	<select id="selectMemberByIdPw" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
+		  FROM MEMBER
+		 WHERE ID = #{id}
+		   AND PW = #{pw}
+	</select>
+	
+	<!-- 로그인 기록 남기기 -->
+	<insert id="insertMemberLog" parameterType="String">
+		INSERT INTO MEMBER_LOG
+			(MEMBER_LOG_NO, ID, SIGN_UP)
+		VALUES
+			(MEMBER_LOG_SEQ.NEXTVAL, #{id}, SYSDATE)
+	</insert>
+	
+	<!-- 탈퇴한 회원 조회(로그인을 시도할 때마다 동작하기 때문에 속도를 향상시키면 좋다.)
+	     sql문 속도 향상 -> 인덱스 부여 -> PK or UNIQUE 지정 -->
+	<select id="selectSignOutMemberById" parameterType="String" resultType="SignOutMemberDTO">
+		SELECT SIGN_OUT_NO, MEMBER_NO, ID, NAME, EMAIL, AGREE_STATE, SIGN_OUT
+		  FROM SIGN_OUT_MEMBER
+		 WHERE ID = #{id}
+	</select>
+	
+	<!-- 탈퇴한 회원 재가입 -->
+	<insert id="reInsertMember" parameterType="MemberDTO">
+		INSERT INTO MEMBER
+			(MEMBER_NO, ID, PW, NAME, EMAIL, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED)
+		VALUES
+			(#{memberNo}, #{id}, #{pw}, #{name}, #{email}, #{agreeState}, SYSDATE, SYSDATE, SYSDATE)
+	</insert>
+	
+	<!-- 탈퇴한 회원 명단에서 제거 -->
+	<delete id="deleteSignOutMember" parameterType="String">
+		DELETE
+		  FROM SIGN_OUT_MEMBER
+		 WHERE ID = #{id}
+	</delete>
+	
 
 </mapper>

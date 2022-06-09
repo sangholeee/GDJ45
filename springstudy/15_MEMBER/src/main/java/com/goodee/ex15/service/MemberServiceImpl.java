@@ -1,7 +1,9 @@
 package com.goodee.ex15.service;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -11,11 +13,17 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.goodee.ex15.domain.MemberDTO;
+import com.goodee.ex15.domain.SignOutMemberDTO;
 import com.goodee.ex15.mapper.MemberMapper;
+import com.goodee.ex15.util.SecurityUtils;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -41,7 +49,8 @@ public class MemberServiceImpl implements MemberService {
 	public Map<String, Object> sendAuthCode(String email) {
 		
 		// 인증코드
-		String authCode = "111111";
+		String authCode = SecurityUtils.authCode(6);    // 6자리 인증코드
+		System.out.println(authCode);
 		
 		// 필수속성
 		Properties props = new Properties();
@@ -51,8 +60,8 @@ public class MemberServiceImpl implements MemberService {
 		props.put("mail.smtp.starttls.enable", "true");    // TLS 허용한다.
 		
 		// 메일을 보내는 사용자 정보
-		final String USERNAME = "각자구글아이디";   
-		final String PASSWORD = "각자구글비밀번호";
+		final String USERNAME = "sangho48609@gmail.com";   
+		final String PASSWORD = "jffvtdldebqhjglj";
 		
 		// 사용자 정보 javax.mail.Session에서 저장
 		Session session = Session.getInstance(props, new Authenticator() {
@@ -63,11 +72,15 @@ public class MemberServiceImpl implements MemberService {
 		});
 		
 		/*
-			이메일 보내기
-			1. 사용자 정보는 구글 메일만 가능합니다.
-			2. 가급적 구글 부계정을 만들어서 사용하세요.
-			3. 구글에서 '보안 수준이 낮은 앱 허용' 을 해야합니다.
-			   https://support.google.com/accounts/answer/6010255 막힘
+		이메일 보내기
+		1. 사용자 정보는 구글 메일만 가능합니다.
+		2. 가급적 구글 부계정을 만들어서 사용하세요.
+		3. 구글 로그인 - Google 계정 - 보안
+		    1) 2단계 인증 - 사용
+		    2) 앱 비밀번호
+		        (1) 앱 선택 - 기타 (앱 이름은 마음대로)
+		        (2) 기기 선택 - Windows 컴퓨터
+		        (3) 생성 버튼 - 16자리 비밀번호를 생성해 줌
 		 */
 		
 		// 이메일 전송하기
@@ -92,4 +105,164 @@ public class MemberServiceImpl implements MemberService {
 		
 		return map;
 	}	
+	
+	@Override
+	public void signIn(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 파라미터
+		String id = SecurityUtils.xss(request.getParameter("id"));        // 크로스 사이트 스크립팅
+		String pw = SecurityUtils.sha256(request.getParameter("pw"));     // SHA-256 암호화
+		String name = SecurityUtils.xss(request.getParameter("name"));    // 크로스 사이트 스크립팅
+		String email = SecurityUtils.xss(request.getParameter("email"));  // 크로스 사이트 스크립팅
+		String location = request.getParameter("location");
+		String promotion = request.getParameter("promotion");
+		int agreeState = 1;  // 필수 동의
+		if(location.equals("location") && promotion.equals("promotion")) {
+			agreeState = 4;  // 필수 + 위치 + 프로모션 동의
+		} else if(location.equals("location") && promotion.isEmpty()) {
+			agreeState = 2;  // 필수 + 위치 동의
+		} else if(location.isEmpty() && promotion.equals("promotion")) {
+			agreeState = 3;  // 필수 + 프로모션 동의
+		}
+		
+		// MemberDTO
+		MemberDTO member = MemberDTO.builder()
+				.id(id)
+				.pw(pw)
+				.name(name)
+				.email(email)
+				.agreeState(agreeState)
+				.build();
+		
+		// MEMBER 테이블에 member 저장
+		int res = memberMapper.insertMember(member);
+		
+		// 응답
+		try {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			if(res == 1) {
+				out.println("<script>");
+				out.println("alert('회원 가입되었습니다.')");
+				out.println("location.href='" + request.getContextPath() + "'");
+				out.println("</script>");
+				out.close();
+			} else {
+				out.println("<script>");
+				out.println("alert('회원 가입에 실패했습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void signOut(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 파라미터
+		Optional<String> opt = Optional.ofNullable(request.getParameter("memberNo"));
+		Long memberNo = Long.parseLong(opt.orElse("0"));
+		
+		// MEMBER 테이블에서 member 삭제
+		int res = memberMapper.deleteMember(memberNo);
+		
+		// 응답
+		try {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			if(res == 1) {
+				request.getSession().invalidate();      // session 초기화
+				out.println("<script>");
+				out.println("alert('Good Bye')");
+				out.println("location.href='" + request.getContextPath() + "'");
+				out.println("</script>");
+				out.close();
+			} else {
+				out.println("<script>");
+				out.println("alert('회원 탈퇴가 실패했습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public MemberDTO login(HttpServletRequest request) {
+		
+		// 파라미터
+		String id = SecurityUtils.xss(request.getParameter("id"));
+		String pw = SecurityUtils.sha256(request.getParameter("pw"));
+		
+		// MemberDTO
+		MemberDTO member = MemberDTO.builder()
+				.id(id)
+				.pw(pw)
+				.build();
+		
+		// ID/Password가 일치하는 회원 조회
+		MemberDTO loginMember = memberMapper.selectMemberByIdPw(member);
+		
+		// ID/Password가 일치하는 회원을 session에 저장 & 로그인 기록 남기기 
+		if(loginMember != null) {
+			memberMapper.insertMemberLog(id);
+		}
+		
+		return loginMember;
+		
+	}
+	
+	@Override
+	public SignOutMemberDTO findSignOutMember(String id) {
+		return memberMapper.selectSignOutMemberById(id);
+	}
+	
+	@Transactional   // insert, delete, update가 두 번 이상 사용될 때 !
+	@Override
+	public void reSignIn(HttpServletRequest request, HttpServletResponse response) {
+
+		// 파라미터
+		Long memberNo = Long.parseLong(request.getParameter("memberNo"));
+		String id = request.getParameter("id");
+		String pw = SecurityUtils.sha256(request.getParameter("pw"));
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		Integer agreeState = Integer.parseInt(request.getParameter("agreeState"));
+		
+		// MemberDTO
+		MemberDTO member = new MemberDTO(memberNo, id, pw, name, email, agreeState, null, null, null, null, null);
+		
+		// MEMBER 테이블에 member 저장
+		int res1 = memberMapper.reInsertMember(member);
+		int res2 = memberMapper.deleteSignOutMember(id);
+		
+		// 응답
+		try {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			if(res1 == 1 && res2 == 1) {
+				out.println("<script>");
+				out.println("alert('다시 모든 서비스를 이용할 수 있습니다.')");
+				out.println("location.href='" + request.getContextPath() + "'");
+				out.println("</script>");
+				out.close();
+			} else {
+				out.println("<script>");
+				out.println("alert('회원 재가입에 실패했습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

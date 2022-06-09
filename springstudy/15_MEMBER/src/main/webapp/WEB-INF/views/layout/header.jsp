@@ -14,8 +14,17 @@
 	
 	<h1>로고</h1>
 	
-	<a href="${contextPath}/member/loginPage">로그인</a>
-	<a href="${contextPath}/member/agreePage">회원가입페이지</a>
+	<!-- 로그인 이전에 보여줄 링크 -->
+	<c:if test="${loginMember eq null}">
+		<a href="${contextPath}/member/loginPage">로그인</a>
+		<a href="${contextPath}/member/agreePage">회원가입페이지</a>
+	</c:if>
+	
+	
+	<c:if test="${loginMember ne null}">
+		<!-- 로그인 이후에 보여줄 링크 -->
+		<a href="${contextPath}/member/signOut?memberNo=${loginMember.memberNo}">회원탈퇴하기</a>
+	</c:if>
 	
 	<hr>
 	

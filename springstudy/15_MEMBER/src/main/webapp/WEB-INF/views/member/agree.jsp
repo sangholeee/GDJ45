@@ -57,16 +57,22 @@
 		// 개별 선택
 		$('.checkOne').on('click', function(){
 		
+			let checkAll = true;                           // 전체 선택하는 거다.
+			
 			// 개별 선택이 하나라도 un-checked 상태이면, 전체 선택도 un-checked
-			$.each($('.checkOne'), function(i, checkOne) {
-				if($(checkOne).is(':checked') == false) {
+			$.each($('.checkOne'), function(i, checkOne){
+				if($(checkOne).is(':checked') == false){   // 개별 선택 하나라도 해제되어 있으면,
 					$('#checkAll').prop('checked', false);
 					$('.items').removeClass('check');
-					return;
+					checkAll = false;                      // 전체 선택이 아니다.
+					return false;
 				}
+			})
+			
+			if(checkAll){
 				$('#checkAll').prop('checked', true);
 				$('.items').addClass('check');
-			})
+			}
 			
 		})
 		
