@@ -56,14 +56,22 @@
 4) 
 
 
+2. 인터셉터 
+   1) servlet-context  -> 한 인터셉터에 mapping path를 여러개 줄 수 있다.
+   2) interceptor.java -> 정해진 매핑의 컨트롤러가 동작하기 직전과 직후에 동작하게 한다. 
+                       -> 
+
+3. Map<String, Object> map = new hashMap<>();
+   map.put("people", "사람");
+   map.put("baseball", "야구");
+   
+   map.get("people"); -> 사람
+
+   -> put 은 key, value 를 지정해주는 것, get은 해당 key에 해당하는 value 값을 불러올 때 사용!
 
 
-
-
-
-
-
-
+4. 쿠키 확인
+   chrome -> 설정 -> 개인정보 및 보안 -> 쿠키 및 기타 사이트 데이터 -> 모든 쿠키 및 사이트 데이터 보기 -> localhost
 
 
 

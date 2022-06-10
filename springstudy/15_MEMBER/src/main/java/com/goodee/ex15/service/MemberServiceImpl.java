@@ -1,6 +1,7 @@
 package com.goodee.ex15.service;
 
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -262,6 +263,27 @@ public class MemberServiceImpl implements MemberService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	@Override
+	public void keepLogin(HttpServletRequest request) {
+		
+		// 1000 * 60 * 60 * 24 * 7 : 7일에 해당하는 밀리초(ms)
+		Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 7));   // 현재날짜 + 7일 후
+		String sessionId = request.getSession().getId();
+		String id = request.getParameter("id");
+		
+		// MemberDTO
+		MemberDTO member = MemberDTO.builder()
+				.id(id)
+				.sessionId(sessionId)
+				.sessionLimit(sessionLimit)
+				.build();
+				
+		// MEMBER 테이블에서 member 정보 수정
+		memberMapper.updateSessionInfo(member);
+		
 		
 	}
 	

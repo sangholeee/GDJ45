@@ -73,5 +73,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE ID = #{id}
 	</delete>
 	
+	<!-- 로그인 유지를 체크한 회원의 session 관련 정보 업데이트 -->
+	<update id="updateSessionInfo" parameterType="MemberDTO">
+		UPDATE MEMBER
+		   SET SESSION_ID = #{sessionId}
+		      ,SESSION_LIMIT = #{sessionLimit}
+		WHERE ID = #{id}
+	</update>
+	
+	
+	
 
 </mapper>

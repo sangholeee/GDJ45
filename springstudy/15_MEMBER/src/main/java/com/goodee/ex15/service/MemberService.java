@@ -18,5 +18,6 @@ public interface MemberService {
 	public MemberDTO login(HttpServletRequest request);
 	public SignOutMemberDTO findSignOutMember(String id);
 	public void reSignIn(HttpServletRequest request, HttpServletResponse response);
+	public void keepLogin(HttpServletRequest request);
 	
 }

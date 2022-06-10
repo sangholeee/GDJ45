@@ -1,9 +1,11 @@
 package com.goodee.ex15.controller;
 
+import java.sql.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,16 +73,35 @@ public class MemberController {
 	}
 
 	@GetMapping("/member/loginPage")
-	public String loginPage() {
+	public String loginPage(@RequestParam(required=false) String url, Model model) {
+		model.addAttribute("url", url);    // member/login.jsp로 url 속성값을 전달한다.
 		return "member/login";
 	}
 	
 	// login() 메소드 수행 전에 LoginInterceptor의 preHandle() 메소드가 호출
 	@PostMapping("/member/login")   
-	public void login(HttpServletRequest request, Model model) {  
+	public void login(HttpServletRequest request, Model model) {  // request -> id, pw, url, keepLogin  
+		// 아이디, 비밀번호가 일치하는 회원 정보 가져오기
 		MemberDTO loginMember = memberService.login(request);
+		
+		// 아이디, 비밀번호가 일치하는 회원이 있으면(로그인 성공) LoginInterceptor의 postHandle() 메소드에 회원 정보 전달
 		if(loginMember != null) {
 			model.addAttribute("loginMember", loginMember);   // Model에 저장된 속성은 LoginInterceptor의 postHandle() 메소드의 ModelAndView 매개변수가 받는다.
+		}
+		
+		// LoginInterceptor의 postHandle() 메소드에 로그인 이후에 이동할 경로 전달
+		model.addAttribute("url", request.getParameter("url"));
+		
+		// 로그인 유지를 체크한 경우
+		// 1) check 상태   : 파라미터 keepLogin = "keep"
+		// 2) uncheck 상태 : 파라미터 keepLogin 자체가 없다. 따라서 null
+		// 빈문자열 -> isempty(), null -> == null
+		String keepLogin = request.getParameter("keepLogin");
+		if(keepLogin != null && keepLogin.equals("keep")) {
+			// System.out.println("세션아이디 : " + request.getSession().getId());
+			memberService.keepLogin(request);
+			
+			
 		}
 	}
 	// login() 메소드 수행 후에 LoginInterceptor의 postHandle() 메소드가 호출
@@ -96,5 +117,19 @@ public class MemberController {
 		memberService.reSignIn(request, response);
 	}
 	
+	@GetMapping("board/savePage")
+	public String savePage() {
+		return "board/save";
+	}
+	
+	@GetMapping("/member/logout")
+	public String logout(HttpSession session) {
+		MemberDTO loginMember = (MemberDTO)session.getAttribute("loginMember");
+		if(loginMember != null) {
+			session.invalidate();
+		}
+		return "redirect:/";     // contextPath 이동
+		
+	}
 	
 }

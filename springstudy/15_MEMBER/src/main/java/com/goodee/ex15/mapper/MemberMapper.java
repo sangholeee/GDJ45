@@ -17,5 +17,6 @@ public interface MemberMapper {
 	public SignOutMemberDTO selectSignOutMemberById(String id);
 	public int reInsertMember(MemberDTO member);
 	public int deleteSignOutMember(String id);
-
+	public int updateSessionInfo(MemberDTO member);
+	
 }

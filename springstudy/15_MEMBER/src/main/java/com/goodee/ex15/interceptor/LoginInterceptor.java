@@ -26,13 +26,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		// 반환타입이 true 이면 @PostMapping("/member/login") 요청을 수행한다.
+		// 반환타입이 true 이면   @PostMapping("/member/login") 요청을 수행한다.
 		// 반환타입이 false 이면  @PostMapping("/member/login") 요청을 수행하지 않기 때문에 작업을 직접 해줘야 한다.
 		
 		// 로그인 된 정보가 있다면 기존 로그인 정보를 제거
 		HttpSession session = request.getSession();
-		if(session.getAttribute("login") != null) {
-			session.removeAttribute("login");
+		if(session.getAttribute("loginMember") != null) {
+			session.removeAttribute("loginMember");
 		}
 		
 		// 탈퇴한 회원인지 확인
@@ -60,16 +60,30 @@ public class LoginInterceptor implements HandlerInterceptor {
 		
 		// ModelAndView를 Map으로 변환하고 loginMember를 추출
 		Map<String, Object> map = modelAndView.getModel();
-		Object loginMember = map.get("loginMember");
+		Object loginMember = map.get("loginMember");    
+		Object url = map.get("url");
 		
 		// loginMember가 있다면(로그인 성공) session에 저장
-		if(loginMember != null) {
-			request.getSession().setAttribute("loginMember", loginMember);
-		}
-		// loginMember가 없다면 로그인 실패
-		else {
-			response.sendRedirect(request.getContentType() + "/member/loginPage");                                                  // Redirect 는 외부에서 접근하는 것이기 때문에 contextPath가 필요하다.
-		}
+		// loginMember가 있다면(로그인 성공) session에 저장
+				if(loginMember != null) {
+					// session에 loginMember 저장
+					request.getSession().setAttribute("loginMember", loginMember);
+					
+					// 로그인 이후 이동
+					if(url.toString().isEmpty()) {  // 로그인 이전 화면 정보가 없으면 contextPath 이동
+						response.sendRedirect(request.getContextPath());
+					} else {  // 로그인 이전 화면 정보가 있으면 해당 화면으로 이동
+						response.sendRedirect(url.toString());
+					}
+				}
+				// loginMember가 없다면 로그인 실패(로그인 페이지로 돌려 보내기)
+				else {
+					if(url.toString().isEmpty()) {
+						response.sendRedirect(request.getContextPath() + "/member/loginPage");				
+					} else {
+						response.sendRedirect(request.getContextPath() + "/member/loginPage?url=" + url.toString());
+					}
+				}
 		
 		
 	}
