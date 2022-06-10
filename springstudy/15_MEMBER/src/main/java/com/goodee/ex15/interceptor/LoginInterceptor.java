@@ -2,6 +2,7 @@ package com.goodee.ex15.interceptor;
 
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -67,8 +68,27 @@ public class LoginInterceptor implements HandlerInterceptor {
 		// loginMember가 있다면(로그인 성공) session에 저장
 				if(loginMember != null) {
 					// session에 loginMember 저장
-					request.getSession().setAttribute("loginMember", loginMember);
-					
+					HttpSession session = request.getSession();
+					session.setAttribute("loginMember", loginMember);
+					// 로그인 유지를 체크한 사용자는 "keepLogin"이라는 쿠키이름으로 
+					// session_id 값을 저장해 둔다.
+					String keepLogin = request.getParameter("keepLogin");
+					if(keepLogin != null && keepLogin.equals("keep")) {
+						// keepLogin 쿠키 만들기
+						Cookie cookie = new Cookie("keepLogin", session.getId());
+						cookie.setPath(request.getContextPath());
+						cookie.setMaxAge(60 * 60 * 24 * 7);   // 초단위(7일) 
+						// keepLogin 쿠키 저장하기
+						response.addCookie(cookie);
+						
+					}
+					// 로그인 유지를 체크하지 않은 사용자는 "keepLogin" 쿠키를 제거한다. -> 덮어쓰기 방식
+					else {
+						// keepLogin 쿠키 제거하기
+						Cookie cookie = new Cookie("keepLogin", "");
+						cookie.setMaxAge(0);         // 유효기간이 없는 쿠키 -> 제거
+						response.addCookie(cookie);
+					}
 					// 로그인 이후 이동
 					if(url.toString().isEmpty()) {  // 로그인 이전 화면 정보가 없으면 contextPath 이동
 						response.sendRedirect(request.getContextPath());

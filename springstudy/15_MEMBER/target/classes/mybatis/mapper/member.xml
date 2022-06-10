@@ -81,7 +81,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID = #{id}
 	</update>
 	
-	
+	<!-- 로그인 유지를 체크한 회원의 자동 로그인 처리 -->
+	<select id="selectMemberBySessionId" parameterType="String" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
+		  FROM MEMBER
+		 WHERE SESSION_ID = #{sessionId}
+		   AND SESSION_LIMIT > SYSDATE
+	</select>
 	
 
 </mapper>

@@ -1,8 +1,8 @@
 package com.goodee.ex15.controller;
 
-import java.sql.Date;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -100,8 +100,6 @@ public class MemberController {
 		if(keepLogin != null && keepLogin.equals("keep")) {
 			// System.out.println("세션아이디 : " + request.getSession().getId());
 			memberService.keepLogin(request);
-			
-			
 		}
 	}
 	// login() 메소드 수행 후에 LoginInterceptor의 postHandle() 메소드가 호출
@@ -123,11 +121,16 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletResponse response) {
 		MemberDTO loginMember = (MemberDTO)session.getAttribute("loginMember");
 		if(loginMember != null) {
 			session.invalidate();
 		}
+		// 로그인 유지를 체크한 사용자의 경우 keepLogin 쿠키 제거
+		Cookie cookie = new Cookie("keepLogin", "");
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
+		
 		return "redirect:/";     // contextPath 이동
 		
 	}
