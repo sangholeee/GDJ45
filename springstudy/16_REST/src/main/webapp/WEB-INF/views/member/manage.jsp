@@ -14,7 +14,7 @@
 
 	/* 페이지 로드 */
 	$(function(){
-		$('#btnInit').on('click', function(){	
+		$('#btnInit').on('click', function(){    
 			fnInit();
 		})
 		fnCheckAll();
