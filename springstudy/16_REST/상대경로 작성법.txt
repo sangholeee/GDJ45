@@ -1,0 +1,5 @@
+상대경로로 작업
+String path = "resources" + getTodayPath()
+String realPath = multipartRequest.getServletContext().getRealPath();
+
+jsp에서 $(contextPath} + realPath
