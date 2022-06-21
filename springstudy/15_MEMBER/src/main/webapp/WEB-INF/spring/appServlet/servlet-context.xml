@@ -23,6 +23,9 @@
 	
 	<context:component-scan base-package="com.goodee.ex15" />
 	
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->	
+	<beans:bean id="naverLoginBO" class="com.goodee.ex15.naver.NaverLoginBO" />
+	
 	<!-- 인터셉터
 	              : 게시판 글쓰기 -> 누구나 작성 버튼을 볼 수 있지만 로그인을 하지 않은 사람이 누르면 로그인이 필요하다고 말해주는 것과 같은 기능 -->
 	<!-- 

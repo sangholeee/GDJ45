@@ -53,18 +53,18 @@ public class MemberServiceImpl implements MemberService {
 		String authCode = SecurityUtils.authCode(6);    // 6자리 인증코드
 		System.out.println(authCode);
 		
-		// 필수속성
+		// 필수 속성
 		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");     // 구글 메일로 보냅니다.
-		props.put("mail.smtp.port", "587");                // 구글 메일 보내는 포트.
-		props.put("mail.smtp.auth", "true");               // 인증되었다.
-		props.put("mail.smtp.starttls.enable", "true");    // TLS 허용한다.
+		props.put("mail.smtp.host", "smtp.gmail.com");  // 구글 메일로 보냅니다.
+		props.put("mail.smtp.port", "587");             // 구글 메일 보내는 포트.
+		props.put("mail.smtp.auth", "true");            // 인증되었다.
+		props.put("mail.smtp.starttls.enable", "true"); // TLS 허용한다.
 		
 		// 메일을 보내는 사용자 정보
-		final String USERNAME = "sangho48609@gmail.com";   
-		final String PASSWORD = "jffvtdldebqhjglj";
+		final String USERNAME = "forspringlec@gmail.com";
+		final String PASSWORD = "ukpiajijxfirdgcz";     // 발급 받은 앱 비밀번호
 		
-		// 사용자 정보 javax.mail.Session에서 저장
+		// 사용자 정보를 javax.mail.Session에 저장
 		Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -73,16 +73,16 @@ public class MemberServiceImpl implements MemberService {
 		});
 		
 		/*
-		이메일 보내기
-		1. 사용자 정보는 구글 메일만 가능합니다.
-		2. 가급적 구글 부계정을 만들어서 사용하세요.
-		3. 구글 로그인 - Google 계정 - 보안
-		    1) 2단계 인증 - 사용
-		    2) 앱 비밀번호
-		        (1) 앱 선택 - 기타 (앱 이름은 마음대로)
-		        (2) 기기 선택 - Windows 컴퓨터
-		        (3) 생성 버튼 - 16자리 비밀번호를 생성해 줌
-		 */
+			이메일 보내기
+			1. 사용자 정보는 구글 메일만 가능합니다.
+			2. 가급적 구글 부계정을 만들어서 사용하세요.
+			3. 구글 로그인 - Google 계정 - 보안
+			    1) 2단계 인증 - 사용
+			    2) 앱 비밀번호
+			        (1) 앱 선택 - 기타 (앱 이름은 마음대로)
+			        (2) 기기 선택 - Windows 컴퓨터
+			        (3) 생성 버튼 - 16자리 비밀번호를 생성해 줌
+		*/
 		
 		// 이메일 전송하기
 		try {
@@ -90,8 +90,8 @@ public class MemberServiceImpl implements MemberService {
 			Message message = new MimeMessage(session);
 			
 			message.setHeader("Content-Type", "text/plain; charset=UTF-8");
-			message.setFrom(new InternetAddress(USERNAME, "인증코드관리자"));               // 이메일 보내는 사람
-			message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));     // 이메일 받는 사람(To : 개인, CC : 다수, BCC : 받는사람은 모르는 다수)  
+			message.setFrom(new InternetAddress(USERNAME, "인증코드관리자"));
+			message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
 			message.setSubject("인증 요청 메일입니다.");
 			message.setText("인증번호는 " + authCode + "입니다.");
 			
@@ -103,9 +103,9 @@ public class MemberServiceImpl implements MemberService {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("authCode", authCode);
-		
 		return map;
-	}	
+		
+	}
 	
 	@Override
 	public void signIn(HttpServletRequest request, HttpServletResponse response) {
@@ -176,9 +176,9 @@ public class MemberServiceImpl implements MemberService {
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			if(res == 1) {
-				request.getSession().invalidate();      // session 초기화
+				request.getSession().invalidate();  // session 초기화
 				out.println("<script>");
-				out.println("alert('Good Bye')");
+				out.println("alert('Good Bye!')");
 				out.println("location.href='" + request.getContextPath() + "'");
 				out.println("</script>");
 				out.close();
@@ -192,6 +192,7 @@ public class MemberServiceImpl implements MemberService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	@Override
@@ -210,7 +211,7 @@ public class MemberServiceImpl implements MemberService {
 		// ID/Password가 일치하는 회원 조회
 		MemberDTO loginMember = memberMapper.selectMemberByIdPw(member);
 		
-		// ID/Password가 일치하는 회원을 session에 저장 & 로그인 기록 남기기 
+		// 로그인 기록 남기기
 		if(loginMember != null) {
 			memberMapper.insertMemberLog(id);
 		}
@@ -224,10 +225,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectSignOutMemberById(id);
 	}
 	
-	@Transactional   // insert, delete, update가 두 번 이상 사용될 때 !
+	@Transactional
 	@Override
 	public void reSignIn(HttpServletRequest request, HttpServletResponse response) {
-
+		
 		// 파라미터
 		Long memberNo = Long.parseLong(request.getParameter("memberNo"));
 		String id = request.getParameter("id");
@@ -270,7 +271,7 @@ public class MemberServiceImpl implements MemberService {
 	public void keepLogin(HttpServletRequest request) {
 		
 		// 1000 * 60 * 60 * 24 * 7 : 7일에 해당하는 밀리초(ms)
-		Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 7));   // 현재날짜 + 7일 후
+		Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 7));  // 현재날짜 + 7일후
 		String sessionId = request.getSession().getId();
 		String id = request.getParameter("id");
 		
@@ -280,16 +281,67 @@ public class MemberServiceImpl implements MemberService {
 				.sessionId(sessionId)
 				.sessionLimit(sessionLimit)
 				.build();
-				
+		
 		// MEMBER 테이블에서 member 정보 수정
 		memberMapper.updateSessionInfo(member);
 		
-		
 	}
-
+	
 	@Override
 	public MemberDTO getMemberBySessionId(String sessionId) {
 		return memberMapper.selectMemberBySessionId(sessionId);
 	}
+	
+	/* 아이디 찾기 */
+	@Override
+	public Map<String, Object> findId(MemberDTO member) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("findMember", memberMapper.selectMemberByNameEmail(member));
+		return map;
+	}
+	
+	/* 비밀번호 찾기 */
+	@Override
+	public Map<String, Object> idEmailCheck(MemberDTO member) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("findMember", memberMapper.selectMemberByIdEmail(member));
+		return map;
+	}
+	
+	@Override
+	public void changePw(HttpServletRequest request, HttpServletResponse response) {
+		
+		String id = request.getParameter("id");
+		String pw = SecurityUtils.sha256(request.getParameter("pw"));
+		
+		MemberDTO member = MemberDTO.builder()
+				.id(id)
+				.pw(pw)
+				.build();
+		
+		int res = memberMapper.updatePw(member);
+		
+		try {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			if(res == 1) {
+				out.println("<script>");
+				out.println("alert('비밀번호가 수정되었습니다.')");
+				out.println("location.href='" + request.getContextPath() + "/member/loginPage'");
+				out.println("</script>");
+				out.close();
+			} else {
+				out.println("<script>");
+				out.println("alert('비밀번호가 수정되지 않았습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }

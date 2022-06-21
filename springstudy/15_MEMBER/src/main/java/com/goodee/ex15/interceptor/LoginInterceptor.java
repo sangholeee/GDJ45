@@ -61,10 +61,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 		
 		// ModelAndView를 Map으로 변환하고 loginMember를 추출
 		Map<String, Object> map = modelAndView.getModel();
-		Object loginMember = map.get("loginMember");    
+		Object loginMember = map.get("loginMember");   
+		System.out.println(loginMember);
 		Object url = map.get("url");
 		
-		// loginMember가 있다면(로그인 성공) session에 저장
 		// loginMember가 있다면(로그인 성공) session에 저장
 				if(loginMember != null) {
 					// session에 loginMember 저장

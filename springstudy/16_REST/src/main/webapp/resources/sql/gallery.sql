@@ -15,6 +15,12 @@
     게시판 : 번호(PK), 제목, 내용, 작성자
              
     첨부   : 첨부번호, 게시글번호(FK), 첨부파일명, 경로
+
+    FILE_TYPE VARCHAR(1 BYTE)
+    I : IMAGE
+    M : MOVIE
+    ... 
+    GalleryServiceImpl의 ContentType에서 확인할 수 있다.
 */
 
 DROP TABLE FILE_ATTACH;

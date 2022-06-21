@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="resources/js/jquery-3.6.0.js"></script>
+<script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
 	
 	/* 페이지 로드 */
@@ -17,7 +17,6 @@
 		fnInit();
 		fnFileCheck();
 		fnAdd();
-		fnAttached();
 	})
 	
 	/* 함수 */
@@ -52,10 +51,57 @@
 		})
 	}
 	function fnAdd(){
+		$('#btnAdd').on('click', function(){
+			// ajax 방식에서 파일 업로드 처리는 FormData 객체 사용
+			// $.ajax({
+			//		contentType: false, 
+			//		processData: false
+			// })
+			
+			// 삽입할 데이터를 FormData 객체로 만듬
+			let formData = new FormData();
+			formData.append('writer', $('#writer').val());
+			formData.append('title', $('#title').val());
+			formData.append('content', $('#content').val());
+			let files = $('#files')[0].files;    // files : 배열
+			for(let i = 0; i < files.length; i++){
+				formData.append('files', files[i]);	
+			}
+			
+			$.ajax({
+				url: '${contextPath}/galleries',
+				type: 'POST',
+				data: formData,
+				contentType: false,
+				processData: false,
+				dataType: 'json',
+				success: function(obj){
+					if(obj.galleryResult) {
+						alert('갤러리가 등록되었습니다.');
+					} else {
+						alert('갤러리 등록이 실패했습니다.');
+					}
+					if(obj.fileAttachResult) {
+						alert('파일이 첨부되었습니다.');
+						fnAttached(obj);
+					} else {
+						alert('파일 첨부가 실패했습니다.');
+					}
+					fnInit();
+				}
+			})
+			
+		})
+		
 		
 	}
-	function fnAttached(){
-		
+	function fnAttached(obj){
+		$('#attached').empty();
+		let result = ''; 
+		for(let i = 0; i < obj.thumbnails.length; i++){
+			result += '<div><img src="${contextPath}/galleries/display?path=' + encodeURIComponent(obj.path) + '&thumnail=' + obj.thumnails[i] + '"></div>';
+		}
+		$('#attached').append(result);     // $('#attached').html(result);
 	}
 	
 </script>

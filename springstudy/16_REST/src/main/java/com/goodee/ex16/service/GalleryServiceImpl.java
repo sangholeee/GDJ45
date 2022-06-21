@@ -1,16 +1,20 @@
 package com.goodee.ex16.service;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -30,7 +34,7 @@ public class GalleryServiceImpl implements GalleryService {
 	// 갤러리 삽입
 	@Transactional
 	@Override
-	public void save(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+	public Map<String, Object> save(MultipartHttpServletRequest multipartRequest) {
 		
 		// 전달된 파라미터
 		String writer = multipartRequest.getParameter("writer");
@@ -59,6 +63,10 @@ public class GalleryServiceImpl implements GalleryService {
 		// 첨부된 모든 파일들
 		List<MultipartFile> files = multipartRequest.getFiles("files");  // 파라미터 files
 		
+		// 썸네일 이름 목록
+		List<String> thumbnails = new ArrayList<>();
+		
+		
 		// 파일 첨부 결과
 		int fileAttachResult;
 		if(files.get(0).getOriginalFilename().isEmpty()) {  // 첨부가 없으면 files.size() == 1임. [MultipartFile[field="files", filename=, contentType=application/octet-stream, size=0]] 값을 가짐.
@@ -66,6 +74,19 @@ public class GalleryServiceImpl implements GalleryService {
 		} else {  // 첨부가 있으면 "files.size() == 첨부파일갯수"이므로 fileAttachResult = 0으로 시작함.
 			fileAttachResult = 0;
 		}
+		
+		/*
+		    단순 값을 넣을 때
+			String path = null;
+			path = 값;
+			===================
+			값을 누적 시킬 때
+			String path = "";
+			path += 값;   
+		 */
+		
+		// path의 scope 조정
+		String path = null;
 		
 		for (MultipartFile multipartFile : files) {
 			
@@ -83,7 +104,7 @@ public class GalleryServiceImpl implements GalleryService {
 					String saved = MyFileUtils.getUuidName(origin);
 					
 					// 첨부파일의 저장 경로(디렉터리)
-					String path = MyFileUtils.getTodayPath();
+					path = MyFileUtils.getTodayPath();
 					
 					// 저장 경로(디렉터리) 없으면 만들기
 					File dir = new File(path);
@@ -106,6 +127,9 @@ public class GalleryServiceImpl implements GalleryService {
 							.size(100, 100)
 							.toFile(new File(dir, "s_" + saved));
 						
+						// 썸네일 이름 목록에 추가
+						thumbnails.add("s_" + saved);
+						
 						// FileAttachDTO
 						FileAttachDTO fileAttach = FileAttachDTO.builder()
 								.path(path)
@@ -116,7 +140,7 @@ public class GalleryServiceImpl implements GalleryService {
 						
 						// FileAttach INSERT 수행
 						fileAttachResult += galleryMapper.insertFileAttach(fileAttach);
-						
+						// fileAttachResult는 누적 값이다. 5번 성공하면 5가 들어감.
 					}
 
 				}
@@ -127,26 +151,31 @@ public class GalleryServiceImpl implements GalleryService {
 			
 		}
 		
-		// 응답
+		// 응답 -> Map or ResponseEntity
+		// 응답할 데이터 (Map)
+		Map<String, Object> map = new HashMap<>();
+		map.put("galleryResult", galleryResult == 1);                   // 갤러리 성공 유무
+		map.put("fileAttachResult", fileAttachResult == files.size());  // 첨부 성공 유무
+		map.put("thumbnails", thumbnails);                              // 썸네일 이름 목록
+		map.put("path", path);                                   	    // 썸네일이 저장된 경로
+		
+		return map;
+		
+	}
+	
+	@Override
+	public ResponseEntity<byte[]> display(String path, String thumbnail) {
+		File file = new File(path, thumbnail);
+		
+		ResponseEntity<byte[]> result = null;
 		try {
-			response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
-			if(galleryResult == 1 && fileAttachResult == files.size()) {
-				out.println("<script>");
-				out.println("alert('갤러리가 등록되었습니다.')");
-				out.println("location.href='" + multipartRequest.getContextPath() + "/gallery/list'");
-				out.println("</script>");
-				out.close();
-			} else {
-				out.println("<script>");
-				out.println("alert('갤러리가 등록되지 않았습니다.')");
-				out.println("history.back()");
-				out.println("</script>");
-				out.close();
-			}
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", Files.probeContentType(file.toPath()));    // file의 ContentType 찾아줄게~
+			result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), null, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
 		
 	}
 	
