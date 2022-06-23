@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<a href="${contextPath}/bbs/addPage">새글작성하기</a>
+	<h1>게시글작성화면</h1>
 
 </body>
 </html>
