@@ -15,7 +15,7 @@ Tool
    1) 테마 / 글꼴
    2) 인코딩
 
-Project
+Project(ex01)
 1. start.spring.io 에서 프로젝트를 만들고 STS4는 해당 프로젝트를 import함
 2. Project        - Maven Project
    Language    - Java
@@ -26,7 +26,7 @@ Project
    Packing      - War
    Java           - 11
    Dependencies
-   - Spring Web : spring-boot-starter, spring-boot-starter-tomcat, jackson, spring-core, spring-mvc
+   - Spring Web : spring-boot-starter, spring-boot-starter-tomcat, jackson, spring-core, spring-mvc(Web Container == Tomcat)
    - Lombok
    - Oracle Driver
    - MyBatis Framework
@@ -101,5 +101,35 @@ Project
 4. Project Run
     1) [Run As] - [Spring Boot App]
     2) 브라우저 열고 http://localhost:9999 입력 (http://localhost:9999/ex01 아님을 주의)
+
+
+* summernote.css
+  summernote.js   -> boot와 충돌이 있다.
+
+  summernote-lite.css
+  summernote-lite.js  -> 사용
+
+이미지를 첨부하면
+<img src="http://localhost:9999/bbs/getImage?file-abc.jpg">와 같은 형태로 저장된다.
+
+
+(ex02)
+Spring Initializer
+* Packaging
+   jar  ->  jsp 파일을 사용하지 않겠다.(tomcat의 도움을 받지 않겠다.)
+   war -> 하던대로 하겠다?
+
+* Dependencies
+  Thymeleaf -> html을 바로 사용할 수 있게 된다.
+
+
+
+
+
+
+
+
+
+
 
 

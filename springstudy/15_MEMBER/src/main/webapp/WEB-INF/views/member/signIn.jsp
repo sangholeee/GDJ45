@@ -25,12 +25,47 @@
 		fnIdCheck();
 		fnPwCheck();
 		fnPwConfirm();
-		fnEmailAuth();
 		fnToUpperCase();
+		fnToUpperCase2();
 		fnSignIn();
+		fnEmailAuth();
+		fnPhoneAuth();
 	})
 	
 	/* 함수 */
+	
+	// 10. 연락처 인증코드 검증
+	let authCodePass2 = false;
+	function fnVerifyAuthCode2(authCode2){  // 이메일로 전송한 인증코드
+		$('#btnVerifyAuthCode2').on('click', function(){
+			if($('#authCode2').val() == authCode2){
+				alert('인증되었습니다.');
+				authCodePass2 = true;
+			} else {
+				alert('인증에 실패했습니다.');
+				authCodePass2 = false;
+			}
+		})
+	}
+	
+	// 9. 연락처 인증
+	function fnPhoneAuth(){
+		$('#btnGetAuthCode2').on('click', function(){
+					$.ajax({
+						url: '${contextPath}/member/sendAuthCode2',
+						type: 'get',
+						data: 'phone=' + $('#phone').val(),
+						dataType: 'json',
+						success: function(obj){  // obj에는 발송한 인증코드(authCode2)가 저장되어 있음.
+							alert('인증코드를 발송했습니다. 이메일을 확인하세요.');
+							fnVerifyAuthCode2(obj.authCode2);  // 발송한 인증코드와 사용자가 입력한 인증코드가 일치하는지 점검.
+						},
+						error: function(jqXHR){
+							alert('인증코드 발송이 실패했습니다.');
+						}
+					})
+		})
+	}
 	
 	// 8. 회원가입
 	function fnSignIn(){
@@ -50,6 +85,11 @@
 				event.preventDefault();
 				return false;
 			}
+			else if(authCodePass2 == false){
+				alert('연락처 인증을 받아야 합니다.');
+				event.preventDefault();
+				return false;
+			}
 			return true;
 		})
 	}
@@ -58,6 +98,12 @@
 	function fnToUpperCase(){
 		$('#authCode').on('keyup', function(){
 			$('#authCode').val($('#authCode').val().toUpperCase());
+		})
+	}
+	// 7. 입력을 무조건 대문자로 처리
+	function fnToUpperCase2(){
+		$('#authCode2').on('keyup', function(){
+			$('#authCode2').val($('#authCode2').val().toUpperCase());
 		})
 	}
 	
@@ -275,6 +321,15 @@
 			<span id="emailMsg"></span><br>
 			<input type="text" name="authCode" id="authCode" placeholder="인증코드 입력">
 			<input type="button" value="인증하기" id="btnVerifyAuthCode"><br><br>
+		</label><br><br>
+		
+		<label for="phone">
+			연락처<br>
+			<input type="text" name="phone" id="phone">
+			<input type="button" value="인증번호받기" id="btnGetAuthCode2"><br>
+			<span id="phoneMsg"></span><br>
+			<input type="text" name="authCode2" id="authCode2" placeholder="인증코드 입력">
+			<input type="button" value="인증하기" id="btnVerifyAuthCode2"><br><br>
 		</label><br><br>
 		
 		<button>가입하기</button>

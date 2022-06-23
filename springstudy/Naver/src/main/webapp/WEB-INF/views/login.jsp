@@ -12,9 +12,15 @@
 </head>
 <body>
 	<c:choose>		
-		<c:when test="${sessionId != null}">			
+		<c:when test="${loginMember != null}">			
 			<h2> 네이버 아이디 로그인 성공하셨습니다!! </h2>			
-			<h3>'${sessionId}' 님 환영합니다! </h3>            	
+			<h3>'${loginMember.name}' 님 환영합니다! </h3>            	
+			<h3>'${loginMember.id}'  </h3>            	
+			<h3>'${loginMember.email}'  </h3>            	
+			<h3>'${loginMember.gender}'  </h3>            	
+			<h3>'${loginMember.birthyear}'  </h3>            	
+			<h3>'${loginMember.birthday}'  </h3>            	
+			<h3>'${loginMember.mobile}'  </h3>            	
 			<h3><a href="logout">로그아웃</a></h3> 		
 		</c:when>		
 		<c:otherwise>			

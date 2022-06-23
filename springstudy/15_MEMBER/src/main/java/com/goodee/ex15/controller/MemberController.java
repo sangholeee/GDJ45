@@ -62,6 +62,11 @@ public class MemberController {
 	public Map<String, Object> sendAuthCode(@RequestParam String email) {
 		return memberService.sendAuthCode(email);
 	}
+	@ResponseBody
+	@GetMapping(value="/member/sendAuthCode2", produces="application/json")
+	public Map<String, Object> sendAuthCode2(@RequestParam String phone) {
+		return memberService.sendAuthCode2(phone);
+	}
 	
 	@PostMapping("/member/signIn")
 	public void signIn(HttpServletRequest request, HttpServletResponse response) {

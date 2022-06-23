@@ -110,7 +110,7 @@
 		<hr>
 		
 		<input type="checkbox" id="service" class="blind checkOne">
-		<label for="serivce" class="item">이용약관에 동의합니다.(필수)</label><br>
+		<label for="service" class="item">이용약관에 동의합니다.(필수)</label><br>
 		<textarea>본 약관은 ...</textarea>
 		<br><br>
 		

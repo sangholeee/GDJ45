@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.goodee.naver3.mapper.NaverMapper">
+
+
+	<!-- 회원가입 -->
+	<insert id="insertNaver" parameterType="NaverDTO">
+		INSERT INTO NAVER
+			(NAVER_NO, ID, NAME, EMAIL, GENDER, BIRTH, MOBILE)
+		VALUES
+			(NAVER_SEQ.NEXTVAL, #{id}, #{name}, #{email}, #{gender}, #{birth}, #{mobile})
+	</insert>
+
+	
+	
+
+</mapper>

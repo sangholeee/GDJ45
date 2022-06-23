@@ -18,6 +18,7 @@ public class MemberDTO {
 	private String pw;
 	private String name;
 	private String email;
+	private String phone;
 	private Integer agreeState;
 	private Date signIn;
 	private Date pwModified;

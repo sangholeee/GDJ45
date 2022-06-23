@@ -17,6 +17,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,8 @@ import com.goodee.ex15.domain.MemberDTO;
 import com.goodee.ex15.domain.SignOutMemberDTO;
 import com.goodee.ex15.mapper.MemberMapper;
 import com.goodee.ex15.util.SecurityUtils;
+
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -105,6 +108,34 @@ public class MemberServiceImpl implements MemberService {
 		map.put("authCode", authCode);
 		return map;
 		
+	}
+	
+	@Override
+	public Map<String, Object> sendAuthCode2(String phone) {
+		
+		String authCode2 = SecurityUtils.authCode(6);
+		
+	    String api_key = "NCSM4A6HJTQWGBU3";
+	    String api_secret = "G0IP0LQVML0IOUNCZCJRQQWBHJGJH982";
+	    net.nurigo.java_sdk.api.Message coolsms = new net.nurigo.java_sdk.api.Message(api_key, api_secret);
+		
+	    HashMap<String, String> params = new HashMap<>();
+	    params.put("to", phone);
+		params.put("from", "01056466373");
+		params.put("type", "SMS");
+		params.put("text", "[gym] 인증번호 " + authCode2 + " 입력하세요.");
+		params.put("app_version", "test app 1.2");
+		
+		try {
+			JSONObject obj = (JSONObject) (coolsms).send(params);
+		} catch (CoolsmsException e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCode());
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("authCode2", authCode2);
+		return map;
 	}
 	
 	@Override
@@ -235,10 +266,11 @@ public class MemberServiceImpl implements MemberService {
 		String pw = SecurityUtils.sha256(request.getParameter("pw"));
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
 		Integer agreeState = Integer.parseInt(request.getParameter("agreeState"));
 		
 		// MemberDTO
-		MemberDTO member = new MemberDTO(memberNo, id, pw, name, email, agreeState, null, null, null, null, null);
+		MemberDTO member = new MemberDTO(memberNo, id, pw, name, email, phone, agreeState, null, null, null, null, null);
 		
 		// MEMBER 테이블에 member 저장
 		int res1 = memberMapper.reInsertMember(member);
